@@ -38,11 +38,11 @@
     <artifactId>community</artifactId>
     <packaging>pom</packaging>
     <version>1.0.0</version>
-    <name>TIBCO Streaming Samples</name>
-    <description>This github repository contains a number of TIBCO Streaming samples that can be cloned to your local workspace.</description>
+    <name>TIBCO Streaming Community Samples</name>
+    <description>This github repository contains a number of TIBCO Streaming samples contributed by the community that can be cloned to your local workspace.</description>
 
     <modules>
-        <module>LiveView</module>
+        <module>liveview</module>
     </modules>
 
     <!-- skip site docs in this aggregator -->

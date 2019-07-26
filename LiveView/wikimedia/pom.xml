@@ -6,10 +6,10 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.tibco.ldm.demo</groupId>
-    <artifactId>NYC-Yellow-Cabs-Demo</artifactId>
+    <artifactId>wikimedia</artifactId>
     <packaging>ep-liveview-fragment</packaging>
     <version>1.0.0</version>
-    <name>NYC Yellow Cabs Demo</name>
+    <name>Wikipedia Monitoring</name>
 
     <properties>
         <com.tibco.ep.sb.studio.sample>true</com.tibco.ep.sb.studio.sample>
@@ -21,28 +21,6 @@
         <artifactId>ep-liveview-fragment</artifactId>
         <version>10.5.0-SNAPSHOT</version>
     </parent>
-
-    <dependencies>
-
-        <dependency>
-            <groupId>com.tibco.ep.lvweb</groupId>
-            <artifactId>lvweb</artifactId>
-            <type>war</type>
-            <scope>provided</scope>
-        </dependency>
-
-        <dependency>
-        	<groupId>com.tibco.ep.sb.adapter</groupId>
-        	<artifactId>feedsim</artifactId>
-        	<version>10.5.0-SNAPSHOT</version>
-        </dependency>
-        <dependency>
-        	<groupId>com.tibco.ep.sb</groupId>
-        	<artifactId>dt-manager</artifactId>
-        	<version>10.5.0-SNAPSHOT</version>
-        	<scope>provided</scope>
-        </dependency>
-    </dependencies>
 
     <build>
 
@@ -87,4 +65,27 @@
 
     </build>
 
+    <dependencies>
+    	<dependency>
+    		<groupId>com.tibco.ep.sb.adapter</groupId>
+    		<artifactId>ldm</artifactId>
+    		<version>10.5.0-SNAPSHOT</version>
+    	</dependency>
+    	<dependency>
+    		<groupId>com.ircclouds.irc</groupId>
+    		<artifactId>irc-api</artifactId>
+    		<version>1.0-0014</version>
+    	</dependency>
+    	<dependency>
+    		<groupId>com.maxmind.geoip2</groupId>
+    		<artifactId>geoip2</artifactId>
+    		<version>2.8.1</version>
+    	</dependency>
+        <dependency>
+            <groupId>com.tibco.ep.lvweb</groupId>
+            <artifactId>lvweb</artifactId>
+            <type>war</type>
+            <scope>provided</scope>
+        </dependency>
+    </dependencies>
 </project>
