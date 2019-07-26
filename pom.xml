@@ -35,14 +35,14 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.tibco.ep</groupId>
-    <artifactId>samples</artifactId>
+    <artifactId>community</artifactId>
     <packaging>pom</packaging>
     <version>1.0.0</version>
     <name>TIBCO Streaming Samples</name>
     <description>This github repository contains a number of TIBCO Streaming samples that can be cloned to your local workspace.</description>
 
     <modules>
-        <module>NYC-Yellow-Cabs-Demo</module>
+        <module>LiveView</module>
     </modules>
 
     <!-- skip site docs in this aggregator -->
