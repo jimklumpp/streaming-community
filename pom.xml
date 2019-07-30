@@ -39,7 +39,7 @@
     <packaging>pom</packaging>
     <version>1.0.0</version>
     <name>TIBCO Streaming Community Samples</name>
-    <description>This github repository contains a number of TIBCO Streaming samples contributed by the community that can be cloned to your local workspace.</description>
+    <description>This github repository contains a number of TIBCO Streaming samples contributed by the community that can be cloned to your local workspace</description>
 
     <modules>
         <module>liveview</module>

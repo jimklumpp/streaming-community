@@ -39,7 +39,7 @@
     <packaging>pom</packaging>
     <version>1.0.0</version>
     <name>LiveView</name>
-    <description>Projects that relate to TIBCO Live Datamart and TIBCO LiveView Web.</description>
+    <description>Projects that relate to TIBCO Live Datamart and TIBCO LiveView Web</description>
 
     <modules>
         <module>nyc-yellow-cabs-demo</module>
