@@ -35,6 +35,20 @@
 
         <pluginManagement>
             <plugins>
+                <!--  deploy site documentation to github pages -->
+                <!--  in CI use mvn site com.github.github:site-maven-plugin:site -->
+                <plugin>
+                    <groupId>com.github.github</groupId>
+                    <artifactId>site-maven-plugin</artifactId>
+                    <version>0.12</version>
+                    <configuration>
+                        <server>github</server>
+                        <message>Updated site documentation from jenkins</message>
+                        <path>${project.parent.version}/liveview/wikimedia/${project.artifactId}</path>
+                        <merge>true</merge>
+                    </configuration>
+                </plugin>
+
                 <!--This plugin's configuration is used to store Eclipse m2e settings only. It has no influence on the Maven build itself.-->
                 <plugin>
                     <groupId>org.eclipse.m2e</groupId>
