@@ -45,7 +45,7 @@ public class TestCase extends UnitTest {
         // create a StreamBase server and load modules once for all tests in this class
         server = ServerManagerFactory.getEmbeddedServer();
         server.startServer();
-        server.loadApp("com.tibco.sb.compexch.python.Python");
+        server.loadApp("com.tibco.sb.compexch.python.PythonProcess");
     }
 
     /**
