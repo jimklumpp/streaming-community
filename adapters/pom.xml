@@ -34,16 +34,15 @@
 
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.tibco.ep</groupId>
-    <artifactId>community</artifactId>
+    <groupId>com.tibco.ep.community</groupId>
+    <artifactId>adapters</artifactId>
     <packaging>pom</packaging>
     <version>1.0.0</version>
-    <name>TIBCO Streaming Community Samples</name>
-    <description>This github repository contains a number of TIBCO Streaming samples contributed by the community that can be cloned to your local workspace</description>
+    <name>Adapters</name>
+    <description>TIBCO Streaming projects that demonstrate the use of StreamBase adapters</description>
 
     <modules>
-        <module>liveview</module>
-        <module>adapters</module>
+        <module>python</module>
     </modules>
 
 </project>

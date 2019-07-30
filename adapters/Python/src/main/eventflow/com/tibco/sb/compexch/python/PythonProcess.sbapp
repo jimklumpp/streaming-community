@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<modify version="10.5.0-SNAPSHOT_a8f4a008b96ea7ff9200c11cd2c5388579e1621f">
+    <add>
+        <gui.metadata>
+            <property name="description" value="Title: Calling Python from StreamBase&#13;&#10;Description: Performs calculus operations in Python&#13;&#10;&#13;&#10;Reminder: The variable &quot;PythonProgramPath&quot; must be set to the appropriate directory (in the Parameters tab).&#13;&#10;The purpose of this module is to call an external process (outside of StreamBase) to handle certain calculations.&#13;&#10;Further, the Python library numpy is an excellent programming tool for scientific and mathematical computing.&#13;&#10;In this simple example, I call a Python script from StreamBase that imports the numpy library in order to perform either integration or differentiation on a polynomial.&#13;&#10;&#13;&#10;Input Stream:&#13;&#10;&#9;Integrate - A boolean valued variable where &quot;true&quot; represents integrate and &quot;false&quot; represents differentiate.&#13;&#10;&#9;Coefficients - A list of polynomial coefficients that start at the term with the highest power and end with the constant term.&#13;&#10;&#13;&#10;The tuple is then sent to the the python module where the desired calculus operation is performed. Note that there are two streams. The StreamBase output stream&#13;&#10;returns a time stamp (representing the time before processing) and a summary of what was inputted. The Python output stream returns the output from the python function,&#13;&#10;the time of completio and the approximate time it took to run the external process.&#13;&#10;If everything runs smoothly, a list representing the calculus operation performed will be in the &quot;Output&quot; field of the output tuple.&#13;&#10;If an error occurs while running the external process, an error message will be outputed in the &quot;Error&quot; field of the output tuple.&#13;&#10;&#13;&#10;This example depends on numpy so make sure that it is installed onto your system and that it is on your system path. Further, one of the command arguments for the &#13;&#10;external process operator is the path of the external file being executed. Make sure that the path to the &quot;Extra's&quot; folder is the correct one (this can be set in the &#13;&#10;Parameters tab in StreamBase studio).&#13;&#10;&#13;&#10;"/>
+        </gui.metadata>
+        <type-metadata>
+            <param name="type" value="module"/>
+            <param name="fully-qualified-name" value="com.tibco.sb.compexch.python.PythonProcess"/>
+        </type-metadata>
+        <memory-model-settings/>
+        <dynamic-variables>
+            <dynamic-variable initial-expression="now()" name="TimeBeforeDynVar" setter-expression="InitiationTime" setter-stream="StreamBase"/>
+        </dynamic-variables>
+        <stream name="PolynomialInput">
+            <property name="description" value="A list of numbers that represents coefficients of a polynomial (first value represents the coefficient of the highest powered term and the last coefficient is the constant term)"/>
+            <schema description="A list of numbers that represents coefficients of a polynomial (first value represents the coefficient of the highest powered term and the last coefficient is the constant term)">
+                <field description="&quot;true&quot; for integrate, &quot;false&quot; for derivative" name="Integrate" type="bool"/>
+                <field description="List of polynomial coefficients from highest to lowest power" name="Coefficients" type="list">
+                    <element-type type="int"/>
+                </field>
+            </schema>
+            <param name="gui:x" value="75"/>
+            <param name="gui:y" value="108"/>
+        </stream>
+        <box name="SplitStream" type="split">
+            <property name="description" value="Split the stream into one that gets passed to the external process, and one that is dealt with in StreamBase."/>
+            <input port="1" stream="PolynomialInput"/>
+            <output port="1" stream="out:SplitStream_1"/>
+            <output port="2" stream="out:SplitStream_2"/>
+            <param name="output-count" value="2"/>
+            <param name="gui:x" value="185"/>
+            <param name="gui:y" value="108"/>
+        </box>
+        <box name="AddPriorTime" type="map">
+            <property name="description" value="Introduce a timestamp that represents the approximate time before the external process has been called and output what operation is being performed."/>
+            <input port="1" stream="out:SplitStream_1"/>
+            <output port="1" stream="StreamBase"/>
+            <target-list>
+                <item name="input" selection="none"/>
+                <expressions>
+                    <include field="Operation">if input1.Integrate then "Integration" else "Differentiation"</include>
+                    <include field="Coefficients">input1.Coefficients</include>
+                    <include field="InitiationTime">now()</include>
+                </expressions>
+            </target-list>
+            <param name="gui:x" value="295"/>
+            <param name="gui:y" value="5"/>
+        </box>
+        <box name="CallPython" type="java">
+            <property name="description" value="This operator calls a python script to execute the calculus operation."/>
+            <input port="1" stream="out:SplitStream_2"/>
+            <output port="1" stream="out:CallPython_1"/>
+            <param name="start:state" value="true"/>
+            <param name="javaclass" value="com.streambase.sb.operator.externalprocess.ExternalProcessOperator"/>
+            <param name="Arguments.0" value="python"/>
+            <param name="Arguments.1" value="&quot;Extras\\Calculus.py&quot;"/>
+            <param name="Arguments.2" value="Integrate"/>
+            <param name="Arguments.3" value="Coefficients"/>
+            <param name="ArgumentsIncluded" value="false"/>
+            <param name="ArgumentsPrefix" value=""/>
+            <param name="CommandLine" value=""/>
+            <param name="CommandLineIncluded" value="true"/>
+            <param name="EnvironmentVariablesPrefix" value="env_"/>
+            <param name="InputTupleIncluded" value="false"/>
+            <param name="InputTuplePrefix" value="input_"/>
+            <param name="NumWorkerThreads" value="1"/>
+            <param name="OperatorType" value="Arguments"/>
+            <param name="OutputType" value="string"/>
+            <param name="RunAsync" value="false"/>
+            <param name="WorkingDirectory" value=""/>
+            <param name="gui:x" value="295"/>
+            <param name="gui:y" value="120"/>
+        </box>
+        <output-stream name="StreamBase">
+            <property name="description" value="Output from the StreamBase (or the natively processed) stream."/>
+            <param name="gui:x" value="405"/>
+            <param name="gui:y" value="5"/>
+        </output-stream>
+        <box name="AddCompletionTime" type="map">
+            <input port="1" stream="out:CallPython_1"/>
+            <output port="1" stream="out:AddCompletionTime_1"/>
+            <target-list>
+                <item name="input" selection="all"/>
+                <expressions>
+                    <include field="PostTime">now()</include>
+                    <include field="PriorTime">TimeBeforeDynVar</include>
+                </expressions>
+            </target-list>
+            <param name="gui:x" value="405"/>
+            <param name="gui:y" value="120"/>
+        </box>
+        <box name="RunningTime" type="map">
+            <property name="description" value="Return the difference between when the external processs was called and when the external process completed."/>
+            <input port="1" stream="out:AddCompletionTime_1"/>
+            <output port="1" stream="Python"/>
+            <target-list>
+                <item name="input" selection="all">
+                    <remove field="stdout"/>
+                    <remove field="stderr"/>
+                    <remove field="PriorTime"/>
+                    <remove field="exitcode"/>
+                    <remove field="PostTime"/>
+                    <remove field="cmdline"/>
+                </item>
+                <expressions>
+                    <include field="Output">input1.stdout</include>
+                    <include field="ProcessTime">input1.PostTime - input1.PriorTime</include>
+                    <include field="CompletionTime">PostTime</include>
+                    <include field="Error">input1.stderr</include>
+                </expressions>
+            </target-list>
+            <param name="gui:x" value="515"/>
+            <param name="gui:y" value="120"/>
+        </box>
+        <output-stream name="Python">
+            <property name="description" value="Output from the StreamBase and externally processed stream."/>
+            <param name="gui:x" value="625"/>
+            <param name="gui:y" value="120"/>
+        </output-stream>
+    </add>
+</modify>
