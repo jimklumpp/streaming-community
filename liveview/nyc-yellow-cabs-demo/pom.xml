@@ -5,8 +5,8 @@
 
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.tibco.ldm.demo</groupId>
-    <artifactId>NYC-Yellow-Cabs-Demo</artifactId>
+    <groupId>com.tibco.ep.community.liveview</groupId>
+    <artifactId>yellowcabs</artifactId>
     <packaging>ep-liveview-fragment</packaging>
     <version>1.0.0</version>
     <name>NYC Yellow Cabs Demo</name>
