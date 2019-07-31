@@ -29,6 +29,7 @@
         <groupId>com.tibco.ep.sb.parent</groupId>
         <artifactId>ep-liveview-fragment</artifactId>
         <version>[10.5.0-SNAPSHOT,99.99.99)</version>
+        <relativePath/>
     </parent>
 
     <dependencies>
