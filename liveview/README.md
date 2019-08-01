@@ -53,17 +53,11 @@
 
 [comment]: # (  POSSIBILITY OF SUCH DAMAGE.                                                  )
 
-# TIBCO&reg; Streaming master Community Samples
+# LiveView
 
-This github repository contains a number of TIBCO&reg; Streaming master samples contributed by the community that can be cloned to your local workspace
+Projects that relate to TIBCO Live Datamart and TIBCO LiveView Web
 
-Overview:
+Samples :
 
-* [Using in TIBCO StreamBase Studio&trade; master](docs/studio.md)
-* [Contributing](docs/contributing.md)
-* [License](docs/LICENSE)
-
-Sample categories:
-
-* [Projects that relate to TIBCO Live Datamart and TIBCO LiveView Web](liveview)
-* [TIBCO&reg; Streaming master projects that demonstrate the use of StreamBase adapters](adapters)
+* [Starting a LiveView Server, using LiveView Web, and working with a LiveView project in StreamBase Studio](nyc-yellow-cabs-demo)
+* [Starting a LiveView Server, using LiveView Web, and working with a LiveView project in StreamBase Studio](wikimedia)

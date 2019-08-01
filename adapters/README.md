@@ -53,17 +53,10 @@
 
 [comment]: # (  POSSIBILITY OF SUCH DAMAGE.                                                  )
 
-# TIBCO&reg; Streaming master Community Samples
+# Adapters
 
-This github repository contains a number of TIBCO&reg; Streaming master samples contributed by the community that can be cloned to your local workspace
+TIBCO&reg; Streaming master projects that demonstrate the use of StreamBase adapters
 
-Overview:
+Samples :
 
-* [Using in TIBCO StreamBase Studio&trade; master](docs/studio.md)
-* [Contributing](docs/contributing.md)
-* [License](docs/LICENSE)
-
-Sample categories:
-
-* [Projects that relate to TIBCO Live Datamart and TIBCO LiveView Web](liveview)
-* [TIBCO&reg; Streaming master projects that demonstrate the use of StreamBase adapters](adapters)
+* [Performing calculus operations in Python](python/src/site/markdown/index.md) ([html](https://tibcosoftware.github.io/tibco-streaming-samples/10.5.0-SNAPSHOT/adapters/python/))
