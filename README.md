@@ -67,3 +67,4 @@ Sample categories:
 
 * [Projects that relate to TIBCO Live Datamart and TIBCO LiveView Web](liveview)
 * [TIBCO&reg; Streaming projects that demonstrate the use of StreamBase adapters](adapters)
+* [Projects contributed by the community to the Component Exchange](component-exchange)
