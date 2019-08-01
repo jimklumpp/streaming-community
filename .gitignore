@@ -1,6 +1,10 @@
+# dot files
 .DS_Store
 .settings
 .project
 .classpath
 .metadata
 .vscode
+
+# directories
+target/
