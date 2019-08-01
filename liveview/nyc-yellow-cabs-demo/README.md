@@ -57,5 +57,3 @@
 
 Starting a LiveView Server, using LiveView Web, and working with a LiveView project in StreamBase Studio
 
-
-:white_check_mark: Tibco approved sample

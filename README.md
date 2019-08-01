@@ -53,17 +53,17 @@
 
 [comment]: # (  POSSIBILITY OF SUCH DAMAGE.                                                  )
 
-# TIBCO&reg; Streaming master Community Samples
+# TIBCO&reg; Streaming Community Samples
 
-This github repository contains a number of TIBCO&reg; Streaming master samples contributed by the community that can be cloned to your local workspace
+This github repository contains a number of TIBCO&reg; Streaming samples contributed by the community that can be cloned to your local workspace
 
 Overview:
 
-* [Using in TIBCO StreamBase Studio&trade; master](docs/studio.md)
+* [Using in TIBCO StreamBase Studio&trade;](docs/studio.md)
 * [Contributing](docs/contributing.md)
 * [License](docs/LICENSE)
 
 Sample categories:
 
 * [Projects that relate to TIBCO Live Datamart and TIBCO LiveView Web](liveview)
-* [TIBCO&reg; Streaming master projects that demonstrate the use of StreamBase adapters](adapters)
+* [TIBCO&reg; Streaming projects that demonstrate the use of StreamBase adapters](adapters)

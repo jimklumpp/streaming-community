@@ -55,8 +55,8 @@
 
 # Adapters
 
-TIBCO&reg; Streaming master projects that demonstrate the use of StreamBase adapters
+TIBCO&reg; Streaming projects that demonstrate the use of StreamBase adapters
 
 Samples :
 
-* [Performing calculus operations in Python](python/src/site/markdown/index.md) ([html](https://tibcosoftware.github.io/tibco-streaming-samples/10.5.0-SNAPSHOT/adapters/python/))
+* [How to use an external process to call a Python script](python)

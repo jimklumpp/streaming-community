@@ -57,6 +57,3 @@
 
 How to use an external process to call a Python script
 
-* [python](src/site/markdown/index.md) ([html](https://tibcosoftware.github.io/tibco-streaming-samples/10.5.0-SNAPSHOT/adapters/python/))
-
-:white_check_mark: Tibco approved sample
