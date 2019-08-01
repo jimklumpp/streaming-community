@@ -53,17 +53,8 @@
 
 [comment]: # (  POSSIBILITY OF SUCH DAMAGE.                                                  )
 
-# TIBCO&reg; Streaming Community Samples
+# Performing calculus operations in Python
 
-This github repository contains a number of TIBCO&reg; Streaming samples contributed by the community that can be cloned to your local workspace
+How to use an external process to call a Python script
 
-Overview:
-
-* [Using in TIBCO StreamBase Studio&trade;](docs/studio.md)
-* [Contributing](docs/contributing.md)
-* [License](docs/LICENSE)
-
-Sample categories:
-
-* [Projects that relate to TIBCO Live Datamart and TIBCO LiveView Web](liveview)
-* [TIBCO&reg; Streaming projects that demonstrate the use of StreamBase adapters](adapters)
+* [python](src/site/markdown/index.md) ([html](https://tibcosoftware.github.io/tibco-streaming-samples/10.5.0-SNAPSHOT/adapters/python/))
