@@ -55,5 +55,5 @@
 
 # NYC Yellow Cabs Demo
 
-Starting a LiveView Server, using LiveView Web, and working with a LiveView project in StreamBase Studio
+NYC Yellow Cabs: Visualize live data in LiveView Web using a LiveView project in StreamBase Studio
 
