@@ -10,7 +10,7 @@
     <packaging>ep-liveview-fragment</packaging>
     <version>1.0.0</version>
     <name>Wikipedia Monitoring</name>
-    <description>Starting a LiveView Server, using LiveView Web, and working with a LiveView project in StreamBase Studio</description>
+    <description>Wikipedia: Visualize live data in LiveView Web using a LiveView project in StreamBase Studio</description>
 
     <licenses>
         <license>
