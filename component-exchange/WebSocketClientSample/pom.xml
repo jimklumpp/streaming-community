@@ -10,7 +10,7 @@
     <packaging>ep-liveview-fragment</packaging>
     <version>1.0.0</version>
     <name>Web Socket Client Sample</name>
-    <description>My LiveView Fragment</description>
+    <description>Demonstrates websocket messages being published in TIBCO LiveView(TM) tables</description>
 
     <licenses>
         <license>

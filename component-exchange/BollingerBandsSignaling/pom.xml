@@ -10,7 +10,7 @@
     <packaging>ep-eventflow-fragment</packaging>
     <version>1.0.0</version>
     <name>Bollinger Bands Signaling</name>
-    <description>My EventFlow Fragment</description>
+    <description>Automated trading simulation using Bollinger Bands trading indicator</description>
 
     <licenses>
         <license>

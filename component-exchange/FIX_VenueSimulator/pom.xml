@@ -10,7 +10,7 @@
     <packaging>ep-eventflow-fragment</packaging>
     <version>1.0.0</version>
     <name>FIX Venue Simulator</name>
-    <description>My EventFlow Fragment</description>
+    <description>FIX Venue Simulator for use in Integration and Performance Testing</description>
 
     <licenses>
         <license>
