@@ -8,3 +8,6 @@
 
 # directories
 target/
+
+# files with extension
+*.war
