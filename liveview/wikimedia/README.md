@@ -55,5 +55,5 @@
 
 # Wikipedia Monitoring
 
-Starting a LiveView Server, using LiveView Web, and working with a LiveView project in StreamBase Studio
+Wikipedia: Visualize live data in LiveView Web using a LiveView project in StreamBase Studio
 
