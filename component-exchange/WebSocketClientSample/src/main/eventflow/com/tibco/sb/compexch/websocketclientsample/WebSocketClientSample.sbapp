@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<modify version="10.5.0-SNAPSHOT_a8f4a008b96ea7ff9200c11cd2c5388579e1621f">
+    <add>
+        <annotations>
+            <annotation name="hygienic"/>
+        </annotations>
+        <type-metadata>
+            <param name="type" value="module"/>
+            <param name="fully-qualified-name" value="com.tibco.sb.compexch.websocketclientsample.WebSocketClientSample"/>
+        </type-metadata>
+        <memory-model-settings/>
+        <dynamic-variables/>
+        <stream name="InputStream">
+            <schema>
+                <field name="inputMessage" type="string"/>
+            </schema>
+        </stream>
+        <box name="WebSocketClient" type="java">
+            <input port="1" stream="InputStream"/>
+            <output port="1" stream="out:WebSocketClient_1"/>
+            <param name="start:state" value="true"/>
+            <param name="javaclass" value="com.tibco.sb.websockets.client.WebSocketClient"/>
+            <param name="contextPath" value="/api/1.0"/>
+            <param name="uri" value="ws://localhost:8080"/>
+        </box>
+        <box name="Map" type="map">
+            <input port="1" stream="out:WebSocketClient_1"/>
+            <output port="1" stream="out:Map_1"/>
+            <target-list>
+                <item name="input" selection="all"/>
+                <expressions>
+                    <include field="TS">now()</include>
+                </expressions>
+            </target-list>
+        </box>
+        <box name="WSMessagesToLV" type="outputadapter">
+            <input port="1" stream="out:Map_1"/>
+            <output port="1" stream="OutputStream"/>
+            <param name="start:state" value="true"/>
+            <param name="javaclass" value="com.streambase.sb.adapter.liveview.LiveViewPublish"/>
+            <param name="bufferSize" value="100"/>
+            <param name="connectInline" value="false"/>
+            <param name="deleteField" value=""/>
+            <param name="dynamicTableName" value="false"/>
+            <param name="encapsulatingLV" value="false"/>
+            <param name="flushInterval" value="250"/>
+            <param name="logLevel" value="INFO"/>
+            <param name="lvTableName" value="WSMessages"/>
+            <param name="shareConnection" value="true"/>
+            <param name="strictSchema" value="false"/>
+            <param name="throughPort" value="false"/>
+            <param name="uri" value="lv://localhost"/>
+        </box>
+        <output-stream name="OutputStream"/>
+    </add>
+</modify>

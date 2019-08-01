@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<modify version="10.5.0-SNAPSHOT_a8f4a008b96ea7ff9200c11cd2c5388579e1621f">
+    <add>
+        <type-metadata>
+            <param name="type" value="module"/>
+            <param name="fully-qualified-name" value="com.tibco.sb.compexch.fix_venuesimulator.test.ClientFeed"/>
+        </type-metadata>
+        <memory-model-settings/>
+        <named-schemas>
+            <schema name="FeedSimControlPortSchema">
+                <field name="command" type="string"/>
+                <field name="value" type="double"/>
+            </schema>
+        </named-schemas>
+        <parameter-definitions>
+            <parameter default="Test/demo.sbfs" name="sbfs"/>
+        </parameter-definitions>
+        <dynamic-variables>
+            <dynamic-variable initial-expression="false" name="DV_feedsimOnOff" setter-expression="! DV_feedsimOnOff" setter-stream="toggleFeedsim"/>
+        </dynamic-variables>
+        <stream name="ControlPort" schema="FeedSimControlPortSchema">
+            <property name="description" value="used only as a schema reference"/>
+            <param name="gui:x" value="-853"/>
+            <param name="gui:y" value="-150"/>
+        </stream>
+        <stream name="toggleFeedsim">
+            <property name="description" value="sending a null tuple on this stream will flip the value of dynamic variable &quot;DV_feedsimOnOff&quot; and send in a &quot;start&quot; or &quot;stop&quot; command to the feedsim adapter"/>
+            <schema/>
+            <param name="gui:x" value="-943"/>
+            <param name="gui:y" value="-54"/>
+        </stream>
+        <box name="toggle" type="map">
+            <property name="description" value="xlat true/false to start/stop"/>
+            <input port="1" stream="toggleFeedsim"/>
+            <output port="1" stream="out:toggle_1"/>
+            <target-list>
+                <item name="input" selection="none"/>
+                <expressions>
+                    <include field="command">if ( DV_feedsimOnOff ) then "start" else "stop"</include>
+                </expressions>
+            </target-list>
+            <param name="gui:x" value="-853"/>
+            <param name="gui:y" value="-54"/>
+        </box>
+        <box name="O" type="union">
+            <input port="1" stream="ControlPort"/>
+            <input port="2" stream="out:toggle_1"/>
+            <output port="1" stream="out:O_1"/>
+            <param name="strict" value="false"/>
+            <param name="gui:x" value="-746"/>
+            <param name="gui:y" value="-108"/>
+            <param name="gui:bends:1" value="-785,-120;-781,-88"/>
+            <param name="gui:bends:2" value="-777,-24;-767,-68"/>
+        </box>
+        <box name="ClientOrderFeed" type="inputadapter">
+            <property name="description" value="wait for start command, then use the demo.sbfs file to control the simulation.  This is defined via a module parameter so it can be changed via sbfs"/>
+            <input port="1" stream="out:O_1"/>
+            <output port="1" stream="status"/>
+            <output port="2" stream="dataFeed"/>
+            <param name="start:state" value="true"/>
+            <param name="javaclass" value="com.streambase.sb.adapter.sbfeedsim.SBFeedsim"/>
+            <param name="enableControlPort" value="true"/>
+            <param name="logLevel" value="INFO"/>
+            <param name="reportRateS" value="0"/>
+            <param name="sbfsFileName" value="${sbfs}"/>
+            <param name="waitForStartCommand" value="true"/>
+            <param name="gui:x" value="-647"/>
+            <param name="gui:y" value="-108"/>
+        </box>
+        <output-stream name="dataFeed">
+            <property name="description" value="this stream will contain the event simulation output tuples, as specified by the demo.sbfs used by the feedsim adapter"/>
+            <param name="gui:x" value="-528"/>
+            <param name="gui:y" value="-54"/>
+            <param name="gui:bends:1" value="-559,-68;-549,-24"/>
+        </output-stream>
+        <output-stream name="status">
+            <property name="description" value="not used by the parent application"/>
+            <param name="gui:x" value="-528"/>
+            <param name="gui:y" value="-150"/>
+            <param name="gui:bends:1" value="-571,-88;-563,-120"/>
+        </output-stream>
+    </add>
+</modify>

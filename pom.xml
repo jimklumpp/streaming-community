@@ -44,6 +44,7 @@
     <modules>
         <module>liveview</module>
         <module>adapters</module>
+        <module>component-exchange</module>
     </modules>
 
     <!-- skip site docs in this aggregator -->

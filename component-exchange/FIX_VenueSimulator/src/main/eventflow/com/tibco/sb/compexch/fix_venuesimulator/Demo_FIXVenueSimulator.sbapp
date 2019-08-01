@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<modify version="10.5.0-SNAPSHOT_a8f4a008b96ea7ff9200c11cd2c5388579e1621f">
+    <add>
+        <gui.metadata>
+            <property name="description" value="depending on module param settings (see each module property) new orders and fills are manual and/or automatic at some rate"/>
+        </gui.metadata>
+        <type-metadata>
+            <param name="type" value="module"/>
+            <param name="fully-qualified-name" value="com.tibco.sb.compexch.fix_venuesimulator.Demo_FIXVenueSimulator"/>
+        </type-metadata>
+        <memory-model-settings/>
+        <dynamic-variables/>
+        <stream name="FeedSim_ToggleOnOff">
+            <schema/>
+            <param name="gui:x" value="70"/>
+            <param name="gui:y" value="591"/>
+        </stream>
+        <stream name="ManuallyCreateNewOrder">
+            <schema>
+                <field name="TimeInForce" type="string"/>
+                <field name="Symbol" type="string"/>
+                <field name="session" type="string"/>
+            </schema>
+            <param name="gui:x" value="198"/>
+            <param name="gui:y" value="488"/>
+        </stream>
+        <module-reference name="venueSimulator">
+            <property name="description" value="IOCs are cancelled every &quot;IOCCnclRt&quot; set in the server module"/>
+            <param name="parallel" value="true"/>
+            <param name="file" value="com.tibco.sb.compexch.fix_venuesimulator.venuesimulation.fixServer"/>
+            <param name="gui:x" value="339"/>
+            <param name="gui:y" value="826"/>
+        </module-reference>
+        <module-reference name="FeedSim">
+            <property name="description" value="this module will supply regular event data to simulate new client orders, as specified by the demo.sbfs file"/>
+            <input name="toggleFeedsim" port="1" stream="FeedSim_ToggleOnOff"/>
+            <output name="dataFeed" port="1" stream="out:FeedSim_1"/>
+            <param name="file" value="com.tibco.sb.compexch.fix_venuesimulator.test.ClientFeed"/>
+            <parameter-bindings>
+                <binding name="sbfs" value="${sbfsFile}"/>
+            </parameter-bindings>
+            <param name="gui:x" value="198"/>
+            <param name="gui:y" value="591"/>
+        </module-reference>
+        <box name="Union" type="union">
+            <input port="1" stream="ManuallyCreateNewOrder"/>
+            <input port="2" stream="out:FeedSim_1"/>
+            <output port="1" stream="out:Union_1"/>
+            <param name="strict" value="true"/>
+            <param name="gui:x" value="342"/>
+            <param name="gui:y" value="556"/>
+            <param name="gui:bends:1" value="295,522;309,578"/>
+            <param name="gui:bends:2" value="286,621;292,597"/>
+        </box>
+        <box name="TIFdefault" type="map">
+            <input port="1" stream="out:Union_1"/>
+            <output port="1" stream="out:TIFdefault_1"/>
+            <target-list>
+                <item name="input" selection="all">
+                    <replace field="TimeInForce">coalesce(TimeInForce,"0")</replace>
+                    <replace field="Symbol">coalesce(Symbol,"IBM")</replace>
+                    <remove field="session"/>
+                </item>
+                <expressions>
+                    <include field="SenderCompID">input1.session</include>
+                </expressions>
+            </target-list>
+            <param name="gui:x" value="424"/>
+            <param name="gui:y" value="556"/>
+        </box>
+        <box name="Split1" type="split">
+            <input port="1" stream="out:TIFdefault_1"/>
+            <output port="1" stream="out:Split1_1"/>
+            <output port="2" stream="out:Split1_2"/>
+            <param name="output-count" value="2"/>
+            <param name="gui:x" value="531"/>
+            <param name="gui:y" value="554"/>
+            <param name="gui:height" value="63"/>
+            <param name="gui:bends:1" value="483,588;483,587"/>
+        </box>
+        <box name="Map2" type="map">
+            <input port="1" stream="out:Split1_2"/>
+            <output port="1" stream="out:Map2_1"/>
+            <target-list>
+                <item name="input" selection="none"/>
+                <expressions>
+                    <include field="go">'go'</include>
+                </expressions>
+            </target-list>
+            <param name="gui:x" value="638"/>
+            <param name="gui:y" value="582"/>
+            <param name="gui:bends:1" value="586,597;588,613"/>
+        </box>
+        <box name="block" type="filter">
+            <input port="1" stream="out:Map2_1"/>
+            <output port="1" stream="out:block_1"/>
+            <param name="autogen-nomatch-port" value="false"/>
+            <param name="expression.0" value="false"/>
+            <param name="gui:x" value="720"/>
+            <param name="gui:y" value="582"/>
+        </box>
+        <module-reference name="ClientDemo">
+            <input name="OneNewOrder" port="1" stream="out:Split1_1"/>
+            <input name="ReplaceThenCancel" port="2" stream="out:block_1"/>
+            <output name="AdminMsgFromFIXAdapter_2" port="1" stream="AdminOutputStream"/>
+            <output name="AppMsgFromFIXAdapter_2" port="2" stream="AppMsgStream"/>
+            <output name="ExecutionReportMsgFromFIXAdapter_2" port="3" stream="ExecRpts"/>
+            <param name="parallel" value="true"/>
+            <param name="file" value="com.tibco.sb.compexch.fix_venuesimulator.test.CreateClientOrder"/>
+            <param name="gui:x" value="820"/>
+            <param name="gui:y" value="526"/>
+            <param name="gui:bends:1" value="673,577;679,549"/>
+            <param name="gui:bends:2" value="773,613;783,568"/>
+        </module-reference>
+        <output-stream name="AdminOutputStream">
+            <param name="gui:x" value="973"/>
+            <param name="gui:y" value="453"/>
+            <param name="gui:bends:1" value="899,549;913,488"/>
+        </output-stream>
+        <output-stream name="AppMsgStream">
+            <property name="description" value="This stream receives all incoming FIX app messages from FIXOutput_2 that are not of type 8 (type 8 messages are routed to a different port -- see FIXInput_1's 'Port Management' property tab)."/>
+            <param name="gui:x" value="973"/>
+            <param name="gui:y" value="539"/>
+            <param name="gui:bends:1" value="905,559;907,571"/>
+        </output-stream>
+        <output-stream name="ExecRpts">
+            <param name="gui:x" value="973"/>
+            <param name="gui:y" value="625"/>
+            <param name="gui:bends:1" value="883,568;903,654"/>
+        </output-stream>
+        <gui.note name="Note">
+            <property name="description" value="send a null tuple to this stream to toggle the feedsim on or off"/>
+            <note-target name="FeedSim_ToggleOnOff"/>
+            <param name="gui:x" value="-197"/>
+            <param name="gui:y" value="593"/>
+            <param name="gui:width" value="215"/>
+            <param name="gui:height" value="87"/>
+        </gui.note>
+        <gui.note name="See_MetaData_TAB">
+            <property name="description" value="metadata tab explains purpose of this module&#13;&#10;parameters TAB contains default values&#13;&#10;definitions TAB contains schema info"/>
+            <param name="gui:x" value="130"/>
+            <param name="gui:y" value="310"/>
+            <param name="gui:width" value="296"/>
+            <param name="gui:height" value="101"/>
+        </gui.note>
+        <gui.note name="TestIOCS">
+            <property name="description" value="IOCs are cancelled every &quot;IOCCnclRt&quot; set in the server module&#13;&#10;&#13;&#10;Select the module here and visit the Parameters tab to see fill rates, etc"/>
+            <note-target name="venueSimulator"/>
+            <param name="gui:x" value="640"/>
+            <param name="gui:y" value="797"/>
+            <param name="gui:width" value="239"/>
+            <param name="gui:height" value="102"/>
+        </gui.note>
+        <gui.note name="TestIOCs">
+            <property name="description" value="set module param &quot;TimeInForce&quot; to &quot;'3'&quot; to test IOCs.  IOCs are cancelled every &quot;IOCCnclRt&quot; set in the server module.  Else send in a null for Day Order"/>
+            <note-target name="ManuallyCreateNewOrder"/>
+            <param name="gui:x" value="-189"/>
+            <param name="gui:y" value="469"/>
+            <param name="gui:width" value="219"/>
+            <param name="gui:height" value="100"/>
+        </gui.note>
+        <gui.group color="196,255,196" name="Test_Client" visual-state="open">
+            <property name="description" value="This group is the example/demo client logic to trigger a new order and send it to the server"/>
+            <member name="TIFdefault"/>
+            <member name="ExecRpts"/>
+            <member name="AdminOutputStream"/>
+            <member name="block"/>
+            <member name="ManuallyCreateNewOrder"/>
+            <member name="Split1"/>
+            <member name="AppMsgStream"/>
+            <member name="ClientDemo"/>
+            <member name="Map2"/>
+            <member name="Union"/>
+            <member name="FeedSim"/>
+            <member name="FeedSim_ToggleOnOff"/>
+            <param name="gui:x" value="39"/>
+            <param name="gui:y" value="432"/>
+            <param name="gui:width" value="1021"/>
+            <param name="gui:height" value="275"/>
+        </gui.group>
+        <gui.group color="255,203,179" name="VenueInclusion" visual-state="open">
+            <property name="description" value="This groups create a concurrent server in the same process as a convienence to host the Venue Simulator"/>
+            <member name="venueSimulator"/>
+            <param name="gui:x" value="326"/>
+            <param name="gui:y" value="786"/>
+            <param name="gui:width" value="86"/>
+            <param name="gui:height" value="123"/>
+        </gui.group>
+    </add>
+</modify>
