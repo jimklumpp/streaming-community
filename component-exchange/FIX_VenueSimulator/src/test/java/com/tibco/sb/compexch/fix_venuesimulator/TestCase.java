@@ -39,8 +39,8 @@ public class TestCase extends UnitTest {
      */
     @BeforeClass
     public static void setupServer() throws StreamBaseException, ConfigurationException, InterruptedException {
-        // Example configuration load
-        // Configuration.forFile("engine.conf").load().activate();
+        // configuration load
+        Configuration.forFile("engine.conf").load().activate();
 
         // create a StreamBase server and load modules once for all tests in this class
         server = ServerManagerFactory.getEmbeddedServer();
