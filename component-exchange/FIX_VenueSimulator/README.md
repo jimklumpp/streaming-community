@@ -55,6 +55,6 @@
 
 # FIX Venue Simulator
 
-My EventFlow Fragment
+FIX Venue Simulator for use in Integration and Performance Testing
 
 * [FIX_VenueSimulator](src/site/markdown/index.md) ([html](https://tibcosoftware.github.io/tibco-streaming-samples/10.5.0-SNAPSHOT/component-exchange/FIX_VenueSimulator/))

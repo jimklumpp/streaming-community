@@ -55,6 +55,6 @@
 
 # Bollinger Bands Signaling
 
-My EventFlow Fragment
+Automated trading simulation using Bollinger Bands trading indicator
 
 * [BollingerBandsSignaling](src/site/markdown/index.md) ([html](https://tibcosoftware.github.io/tibco-streaming-samples/10.5.0-SNAPSHOT/component-exchange/BollingerBandsSignaling/))
