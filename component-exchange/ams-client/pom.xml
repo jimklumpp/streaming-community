@@ -10,6 +10,7 @@
     <packaging>ep-eventflow-fragment</packaging>
     <version>1.0.0</version>
     <name>AMS Client</name>
+    <description>AMS client operator demonstrates the use of the TIBCO Artifact Management Server's REST API</description>
 
     <licenses>
         <license>
