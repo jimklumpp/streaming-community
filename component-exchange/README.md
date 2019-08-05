@@ -60,5 +60,5 @@ Projects contributed by the community to the Component Exchange
 Samples :
 
 * [Automated trading simulation using Bollinger Bands trading indicator](BollingerBandsSignaling)
-* [FIX Venue Simulator for use in Integration and Performance Testing](FIX_VenueSimulator)
 * [Demonstrates websocket messages being published in TIBCO LiveView(TM) tables](WebSocketClientSample)
+* [${project.description}](ams-client)
