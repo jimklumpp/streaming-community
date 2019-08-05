@@ -5,7 +5,7 @@
 
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.tibco.sb.compexch</groupId>
+    <groupId>com.tibco.ep.community.component-exchange</groupId>
     <artifactId>ams-client</artifactId>
     <packaging>ep-eventflow-fragment</packaging>
     <version>1.0.0</version>
@@ -27,7 +27,7 @@
     <parent>
         <groupId>com.tibco.ep.sb.parent</groupId>
         <artifactId>ep-eventflow-fragment</artifactId>
-        <version>[10.5.0,99.99.99)</version>
+        <version>[10.5.0-SNAPSHOT,99.99.99)</version>
         <relativePath/>
     </parent>
 
