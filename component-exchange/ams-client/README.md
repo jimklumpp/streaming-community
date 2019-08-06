@@ -55,11 +55,5 @@
 
 # AMS Client
 
-[ERROR] Failed to execute goal org.codehaus.mojo:exec-maven-plugin:1.6.0:exec (default-cli) on project ams-client: unbalanced quotes in AMS client operator demonstrates the use of the TIBCO Artifact Management Server's REST API -> [Help 1]
-[ERROR] 
-[ERROR] To see the full stack trace of the errors, re-run Maven with the -e switch.
-[ERROR] Re-run Maven using the -X switch to enable full debug logging.
-[ERROR] 
-[ERROR] For more information about the errors and possible solutions, please read the following articles:
-[ERROR] [Help 1] http://cwiki.apache.org/confluence/display/MAVEN/MojoExecutionException
+AMS client operator demonstrates the use of the TIBCO Artifact Management Server REST API
 
