@@ -62,3 +62,4 @@ Samples :
 * [Automated trading simulation using Bollinger Bands trading indicator](BollingerBandsSignaling)
 * [Demonstrates websocket messages being published in TIBCO LiveView(TM) tables](WebSocketClientSample)
 * [AMS client operator demonstrates the use of the TIBCO Artifact Management Server REST API](ams-client)
+* [How to use an external process to call a Python script](python)

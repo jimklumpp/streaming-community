@@ -57,4 +57,4 @@
 
 How to use an external process to call a Python script
 
-* [Performing calculus operations in Python (python)](src/site/markdown/index.md) ([html](https://tibcoguillonapa.github.io/streaming-community/10.5.0-SNAPSHOT/adapters/python/))
+* [Performing calculus operations in Python (python)](src/site/markdown/index.md) ([html](https://tibcoguillonapa.github.io/streaming-community/10.5.0-SNAPSHOT/component-exchange/python/))
