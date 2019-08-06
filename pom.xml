@@ -43,7 +43,6 @@
 
     <modules>
         <module>liveview</module>
-        <module>adapters</module>
         <module>component-exchange</module>
     </modules>
 
