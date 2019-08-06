@@ -31,7 +31,7 @@
 
 [comment]: # (                                                                               )
 
-[comment]: # (  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"  )
+[comment]: # (  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS")
 
 [comment]: # (  AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE    )
 
@@ -57,4 +57,4 @@
 
 Demonstrates websocket messages being published in TIBCO LiveView(TM) tables
 
-* [WebSocketClientSample](src/site/markdown/index.md) ([html](https://tibcosoftware.github.io/tibco-streaming-samples/10.5.0-SNAPSHOT/component-exchange/WebSocketClientSample/))
+* [Web Socket Client Sample (WebSocketClientSample)](src/site/markdown/index.md) ([html](https://tibcoguillonapa.github.io/streaming-community/10.5.0-SNAPSHOT/component-exchange/WebSocketClientSample/))
