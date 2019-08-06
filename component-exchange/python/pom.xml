@@ -5,7 +5,7 @@
 
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.tibco.ep.community.adapters</groupId>
+    <groupId>com.tibco.ep.community.component-exchange</groupId>
     <artifactId>python</artifactId>
     <packaging>ep-eventflow-fragment</packaging>
     <version>1.0.0</version>

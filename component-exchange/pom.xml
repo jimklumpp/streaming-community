@@ -46,6 +46,7 @@
         <!-- <module>FIX_VenueSimulator</module> -->
         <module>WebSocketClientSample</module>
         <module>ams-client</module>
+        <module>python</module>
     </modules>
 
     <!-- skip site docs in this aggregator -->
