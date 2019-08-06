@@ -1,9 +1,6 @@
-______________________________________________________________________________
-AMS Client Operator
-______________________________________________________________________________
+# AMS Client Operator
 
-Introduction
-===============
+## Introduction
 
 The AMS client operator demonstrates the use of the TIBCO Artifact Management Server's REST API. The operator can be used for 
 enumerating the AMS projects and their artifacts, and for fetching, adding, updating, and deleting artifacts. More importantly,
@@ -12,8 +9,8 @@ the operator's source code can be used as the starting point for building your o
 The .zip file includes two example StreamBase 7.7 applications: one that provides low-level access to AMS's individual REST end points, 
 and a second that demonstrates publishing model files to AMS. 
 
-Details
-===============
+## Details
+
 The operator provides a single control input port and a single results output port. The input port's command field conveys
 to the operator which of several commands to execute. Command-specific information, such as the AMS project name and artifact
 path, is provided to the operator through a handful of other input port fields. On receipt of an input tuple, the operator validates
