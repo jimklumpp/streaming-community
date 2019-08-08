@@ -45,7 +45,7 @@
                 <configuration>
                     <server>github</server>
                     <message>Updated site documentation from jenkins</message>
-                    <path>${project.parent.version}/adapters/python/${project.artifactId}</path>
+                    <path>component-exchange/${project.artifactId}</path>
                     <merge>true</merge>
                 </configuration>
             </plugin>

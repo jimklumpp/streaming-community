@@ -69,7 +69,7 @@
                     <configuration>
                         <server>github</server>
                         <message>Updated site documentation from jenkins</message>
-                        <path>${project.parent.version}/liveview/nyc-yellow-cabs-demo/${project.artifactId}</path>
+                        <path>liveview/${project.artifactId}</path>
                         <merge>true</merge>
                     </configuration>
                 </plugin>
