@@ -1,0 +1,41 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head><meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+<title>WikimediaEditsAdapterBeanInfo xref</title>
+<link type="text/css" rel="stylesheet" href="../../../../stylesheet.css" />
+</head>
+<body>
+<div id="overview"><a href="../../../../../apidocs/com/tibco/streambase/ircdemo/WikimediaEditsAdapterBeanInfo.html">View Javadoc</a></div><pre>
+<a class="jxr_linenumber" name="L1" href="#L1">1</a>   <strong class="jxr_keyword">package</strong> com.tibco.streambase.ircdemo;
+<a class="jxr_linenumber" name="L2" href="#L2">2</a>   
+<a class="jxr_linenumber" name="L3" href="#L3">3</a>   <strong class="jxr_keyword">import</strong> java.beans.*;
+<a class="jxr_linenumber" name="L4" href="#L4">4</a>   
+<a class="jxr_linenumber" name="L5" href="#L5">5</a>   <strong class="jxr_keyword">import</strong> com.streambase.sb.<strong class="jxr_keyword">operator</strong>.parameter.*;
+<a class="jxr_linenumber" name="L6" href="#L6">6</a>   
+<a class="jxr_linenumber" name="L7" href="#L7">7</a>   <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">class</strong> <a name="WikimediaEditsAdapterBeanInfo" href="../../../../com/tibco/streambase/ircdemo/WikimediaEditsAdapterBeanInfo.html#WikimediaEditsAdapterBeanInfo">WikimediaEditsAdapterBeanInfo</a> <strong class="jxr_keyword">extends</strong> SBSimpleBeanInfo {
+<a class="jxr_linenumber" name="L8" href="#L8">8</a>   
+<a class="jxr_linenumber" name="L9" href="#L9">9</a>   	<strong class="jxr_keyword">public</strong> SBPropertyDescriptor[] getPropertyDescriptorsChecked()
+<a class="jxr_linenumber" name="L10" href="#L10">10</a>  			<strong class="jxr_keyword">throws</strong> IntrospectionException {
+<a class="jxr_linenumber" name="L11" href="#L11">11</a>  		SBPropertyDescriptor[] p = {
+<a class="jxr_linenumber" name="L12" href="#L12">12</a>  				<strong class="jxr_keyword">new</strong> SBPropertyDescriptor(<span class="jxr_string">"server"</span>, WikimediaEditsAdapter.<strong class="jxr_keyword">class</strong>).displayName(<span class="jxr_string">"IRC Server"</span>)
+<a class="jxr_linenumber" name="L13" href="#L13">13</a>  				.description(<span class="jxr_string">"IRC server to connect to"</span>),
+<a class="jxr_linenumber" name="L14" href="#L14">14</a>  				<strong class="jxr_keyword">new</strong> SBPropertyDescriptor(<span class="jxr_string">"port"</span>, WikimediaEditsAdapter.<strong class="jxr_keyword">class</strong>).displayName(<span class="jxr_string">"IRC Server Port #"</span>)
+<a class="jxr_linenumber" name="L15" href="#L15">15</a>  				.description(<span class="jxr_string">"IRC server port to connect to"</span>),
+<a class="jxr_linenumber" name="L16" href="#L16">16</a>  				<strong class="jxr_keyword">new</strong> SBPropertyDescriptor(<span class="jxr_string">"channel"</span>, WikimediaEditsAdapter.<strong class="jxr_keyword">class</strong>).displayName(<span class="jxr_string">"Channel"</span>)
+<a class="jxr_linenumber" name="L17" href="#L17">17</a>  				.description(<span class="jxr_string">"IRC channel to join on connect"</span>),
+<a class="jxr_linenumber" name="L18" href="#L18">18</a>  				<strong class="jxr_keyword">new</strong> SBPropertyDescriptor(<span class="jxr_string">"nick"</span>, WikimediaEditsAdapter.<strong class="jxr_keyword">class</strong>).displayName(<span class="jxr_string">"IRC Nickname"</span>)
+<a class="jxr_linenumber" name="L19" href="#L19">19</a>  				.description(<span class="jxr_string">"IRC nickname to use when connected; the adapter will generate some alternatives based on this if the nick is taken"</span>),
+<a class="jxr_linenumber" name="L20" href="#L20">20</a>  				<strong class="jxr_keyword">new</strong> SBPropertyDescriptor(<span class="jxr_string">"realName"</span>,WikimediaEditsAdapter.<strong class="jxr_keyword">class</strong>).displayName(<span class="jxr_string">"IRC Real Name"</span>)
+<a class="jxr_linenumber" name="L21" href="#L21">21</a>  				.description(<span class="jxr_string">"IRC 'real name' to report to the server on connecting"</span>),
+<a class="jxr_linenumber" name="L22" href="#L22">22</a>  				<strong class="jxr_keyword">new</strong> SBPropertyDescriptor(<span class="jxr_string">"connectTimeoutSecs"</span>,WikimediaEditsAdapter.<strong class="jxr_keyword">class</strong>).displayName(<span class="jxr_string">"Connection time-out (seconds)"</span>)
+<a class="jxr_linenumber" name="L23" href="#L23">23</a>  				.description(<span class="jxr_string">"Seconds to allow the connection to the IRC server to be established during adapter initializations"</span>),
+<a class="jxr_linenumber" name="L24" href="#L24">24</a>  						};
+<a class="jxr_linenumber" name="L25" href="#L25">25</a>  		<strong class="jxr_keyword">return</strong> p;
+<a class="jxr_linenumber" name="L26" href="#L26">26</a>  	}
+<a class="jxr_linenumber" name="L27" href="#L27">27</a>  
+<a class="jxr_linenumber" name="L28" href="#L28">28</a>  }
+</pre>
+<hr/>
+<div id="footer">Copyright &#169; 2019. All rights reserved.</div>
+</body>
+</html>
