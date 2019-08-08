@@ -41,6 +41,12 @@
     <name>TIBCO Streaming Community Samples</name>
     <description>This github repository contains a number of TIBCO Streaming samples contributed by the community that can be cloned to your local workspace</description>
 
+    <url>https://github.com/TIBCOguillonapa/streaming-community</url>
+
+    <properties>
+        <github.global.server>github</github.global.server>
+    </properties>
+
     <modules>
         <module>liveview</module>
         <module>component-exchange</module>
@@ -63,6 +69,8 @@
                 <artifactId>site-maven-plugin</artifactId>
                 <version>0.12</version>
                 <configuration>
+                    <repositoryOwner>TIBCOguillonapa</repositoryOwner>
+                    <repositoryName>streaming-community</repositoryName>
                     <message>Updated site documentation from jenkins</message>
                     <skip>true</skip>
                 </configuration>

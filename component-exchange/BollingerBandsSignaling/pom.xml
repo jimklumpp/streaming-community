@@ -12,6 +12,8 @@
     <name>Bollinger Bands Signaling</name>
     <description>Automated trading simulation using Bollinger Bands trading indicator</description>
 
+    <url>https://github.com/TIBCOguillonapa/streaming-community</url>
+    
     <licenses>
         <license>
             <name>BSD 3-Clause License</name>

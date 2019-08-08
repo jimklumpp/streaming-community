@@ -12,6 +12,8 @@
     <name>Performing calculus operations in Python</name>
     <description>How to use an external process to call a Python script</description>
 
+    <url>https://github.com/TIBCOguillonapa/streaming-community</url>
+    
     <licenses>
         <license>
             <name>BSD 3-Clause License</name>

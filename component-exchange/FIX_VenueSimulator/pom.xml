@@ -12,6 +12,8 @@
     <name>FIX Venue Simulator</name>
     <description>FIX Venue Simulator for use in Integration and Performance Testing</description>
 
+    <url>https://github.com/TIBCOguillonapa/streaming-community</url>
+    
     <licenses>
         <license>
             <name>BSD 3-Clause License</name>
