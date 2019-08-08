@@ -1,3 +1,0 @@
-# WebSocketClientSample
-
-My LiveView Fragment

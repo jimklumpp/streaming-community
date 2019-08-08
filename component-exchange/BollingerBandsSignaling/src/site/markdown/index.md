@@ -1,3 +1,0 @@
-# BollingerBandsSignaling
-
-My EventFlow Fragment
