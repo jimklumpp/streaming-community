@@ -45,7 +45,7 @@
         <module>BollingerBandsSignaling</module>
         <!-- <module>FIX_VenueSimulator</module> -->
         <module>WebSocketClientSample</module>
-        <!-- <module>ams-client</module> -->
+        <module>ams-client</module>
         <module>python</module>
     </modules>
 
