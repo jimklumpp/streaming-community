@@ -48,8 +48,7 @@
     </properties>
 
     <modules>
-        <module>liveview</module>
-        <module>component-exchange</module>
+        <module>components</module>
     </modules>
 
     <!-- skip site docs in this aggregator -->

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sbfs:Simulation xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:sbfs="http://www.streambase.com/schemas/feedsim/02/SBFS">
+  <SimStreams Name="PolynomialInput">
+    <ProcessingOptions DataRatePerSecond="1.0" DataGenerationMethod="Custom"/>
+    <Schema>
+      <Fields Name="Integrate" Description="&quot;true&quot; for integrate, &quot;false&quot; for derivative">
+        <Distribution GenerationMethod="Uniform" MaxValue="1.0"/>
+        <DataSourceMapping/>
+      </Fields>
+      <Fields Name="Coefficients" DataTypeName="list" Description="List of polynomial coefficients from highest to lowest power">
+        <Distribution GenerationMethod="ListSize" UseRandomSize="true" BlobSize="10" BlobMinSize="2"/>
+        <DataSourceMapping/>
+        <DataType DataTypeName="list">
+          <ElementType DataTypeName="int">
+            <Distribution GenerationMethod="Random"/>
+          </ElementType>
+          <Distribution GenerationMethod="ListSize"/>
+        </DataType>
+      </Fields>
+    </Schema>
+  </SimStreams>
+</sbfs:Simulation>

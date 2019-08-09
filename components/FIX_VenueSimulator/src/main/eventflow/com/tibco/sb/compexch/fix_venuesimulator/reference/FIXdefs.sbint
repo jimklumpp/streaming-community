@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<application version="10.5.0-SNAPSHOT_a8f4a008b96ea7ff9200c11cd2c5388579e1621f">
+    <type-metadata>
+        <param name="type" value="interface"/>
+        <param name="fully-qualified-name" value="com.tibco.sb.compexch.fix_venuesimulator.reference.FIXdefs"/>
+    </type-metadata>
+    <memory-model-settings/>
+    <named-schemas>
+        <schema description="This schema is used to send commands to FIX adapters via their Command port." name="FIXCommand">
+            <field name="Command" type="string"/>
+            <field name="BeginString" type="string"/>
+            <field name="SenderCompID" type="string"/>
+            <field name="TargetCompID" type="string"/>
+            <field name="BeginSeqNo" type="int"/>
+            <field name="EndSeqNo" type="int"/>
+        </schema>
+        <schema description="This schema is used to send and receive FIX messages. All the fields in this schema are expected to represent a FIX field of the same name. The one exception to this is the optional __FIXMessageBody, in which the entire FIX message will be placed verbatim. When sending a FIX message, the contents of this field will be used to initialize the outgoing FIX message before all other fields are applied." name="FIXMessages">
+            <field description="This is the BeginString field. It is named __tag_8 here to demonstrate how to refer to fields by tag number instead of by name." name="__tag_8" type="string"/>
+            <field name="MsgType" type="string"/>
+            <field name="SenderCompID" type="string"/>
+            <field name="TargetCompID" type="string"/>
+            <field description="When this field is present in the schema, the entire FIX message will be placed here." name="__FIXMessageBody" type="blob"/>
+        </schema>
+        <schema description="This schema is used to send and receive FIX Execution Report messages (MsgType='8')." name="FIX_4_2_MsgType_8_ExecutionReport">
+            <field name="BeginString" type="string"/>
+            <field name="MsgType" type="string"/>
+            <field name="SenderCompID" type="string"/>
+            <field name="TargetCompID" type="string"/>
+            <field name="OrderQty" type="double"/>
+            <field name="Price" type="double"/>
+            <field name="Side" type="string"/>
+            <field name="OrderID" type="string"/>
+            <field name="ClOrdID" type="string"/>
+            <field name="Symbol" type="string"/>
+            <field name="OrdStatus" type="string"/>
+            <field name="OrdType" type="string"/>
+            <field name="LeavesQty" type="double"/>
+            <field name="ExecID" type="string"/>
+            <field name="ExecTransType" type="string"/>
+            <field name="ExecType" type="string"/>
+            <field name="CumQty" type="double"/>
+            <field name="AvgPx" type="double"/>
+            <field name="LastPx" type="double"/>
+            <field name="LastShares" type="double"/>
+            <field name="TimeInForce" type="string"/>
+            <field name="Text" type="string"/>
+            <field name="TransactTime" type="string"/>
+            <field name="OrdRejReason" type="string"/>
+        </schema>
+        <schema description="This schema is used to send and receive FIX New Order Single messages (MsgType='D'). This minimal schema has only the New Order Single required fields for FIX 4., plus one optional repeating group to illustrate how to handle them in StreamBase applications." name="FIX_4_2_MsgType_D_NewOrderSingle">
+            <field name="BeginString" type="string"/>
+            <field name="MsgType" type="string"/>
+            <field name="SenderCompID" type="string"/>
+            <field name="TargetCompID" type="string"/>
+            <field name="OrderQty" type="double"/>
+            <field name="Price" type="double"/>
+            <field name="OrderID" type="string"/>
+            <field name="ClOrdID" type="string"/>
+            <field name="Symbol" type="string"/>
+            <field name="HandlInst" type="string"/>
+            <field name="TransactTime" type="string"/>
+            <field name="OrdType" type="string"/>
+            <field name="Side" type="string"/>
+            <field name="TimeInForce" type="string"/>
+        </schema>
+        <schema description="This schema is used to send and receive FIX New Order Single messages (MsgType='D'). This minimal schema has only the New Order Single required fields for FIX 4., plus one optional repeating group to illustrate how to handle them in StreamBase applications." name="FIX_4_2_MsgType_F_OrderCancel">
+            <field name="BeginString" type="string"/>
+            <field name="MsgType" type="string"/>
+            <field name="SenderCompID" type="string"/>
+            <field name="TargetCompID" type="string"/>
+            <field name="OrderQty" type="double"/>
+            <field name="Price" type="double"/>
+            <field name="OrderID" type="string"/>
+            <field name="ClOrdID" type="string"/>
+            <field description="original client order ID" name="OrigClOrdID" type="string"/>
+            <field name="Symbol" type="string"/>
+            <field name="HandlInst" type="string"/>
+            <field name="TransactTime" type="string"/>
+            <field name="OrdType" type="string"/>
+            <field name="Side" type="string"/>
+            <field name="TimeInForce" type="string"/>
+        </schema>
+        <schema description="This schema contains the repeating fields of the NoTradingSessions (tag=386) repeating group.&#13;&#10;&#13;&#10;(While the NoTradingSessions repeating group is optional and not relevant to the logic of this sample, it illustrates how to handle repeating groups in a streamBase schema.)" name="FIX_4_2_NoTradingSessionsFields_Repeating_Group">
+            <field description="tag=336" name="TradingSessionID" type="string"/>
+        </schema>
+    </named-schemas>
+    <dynamic-variables/>
+</application>

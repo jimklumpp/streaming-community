@@ -1,0 +1,984 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<modify version="10.5.0-SNAPSHOT_a8f4a008b96ea7ff9200c11cd2c5388579e1621f">
+    <add>
+        <gui.metadata>
+            <property name="description" value="this module will ack and fill venue order to simiulate various venues.&#13;&#10;&#13;&#10;a real venue will have many more validations and rules, as would a functional test.   the venue simulator ASSUMES that these will be tested.&#13;&#10;for example a cancel/replace that decrease Quantity may violate venue rules, but this simulator will accept the replace, assuming that only&#13;&#10;increases in quantity are being submitted.   another example is that we will fill orders regardless of price (no market data is used)."/>
+        </gui.metadata>
+        <type-metadata>
+            <param name="type" value="module"/>
+            <param name="fully-qualified-name" value="com.tibco.sb.compexch.fix_venuesimulator.venuesimulation.fixServer"/>
+        </type-metadata>
+        <memory-model-settings/>
+        <import from="com.tibco.sb.compexch.fix_venuesimulator.reference.FIXdefs"/>
+        <dynamic-variables>
+            <dynamic-variable initial-expression="int(${FillQty})" name="DV_FillQty" setter-expression="FillQty" setter-stream="Constants"/>
+            <dynamic-variable initial-expression="double(${FillRate})" name="DV_FillRate" setter-expression="FillRate" setter-stream="Constants"/>
+            <dynamic-variable initial-expression="int(${IOCFillRt})" name="DV_IOCFillRt" setter-expression="IOCCnclRt" setter-stream="Constants"/>
+        </dynamic-variables>
+        <data name="VenueOrdersUnfilled" shared="false" source="concrete" type="querytable">
+            <property name="description" value="table of unfilled orders that will be filled at some rate by this venue simulator"/>
+            <param name="storage-method" value="heap"/>
+            <param name="replicated" value="false"/>
+            <table-schema schema="FIX_4_2_MsgType_8_ExecutionReport">
+                <primary-index type="hash">
+                    <field name="ClOrdID"/>
+                </primary-index>
+            </table-schema>
+            <param name="truncate" value="false"/>
+            <preload format="csv" mode="empty"/>
+            <param name="gui:x" value="482"/>
+            <param name="gui:y" value="15"/>
+            <param name="gui:width" value="150"/>
+            <param name="gui:height" value="70"/>
+        </data>
+        <stream name="Constants">
+            <schema>
+                <field name="FillQty" type="int"/>
+                <field name="IOCCnclRt" type="int"/>
+                <field name="FillRate" type="double"/>
+                <field name="FillSleepMilliSecs" type="int"/>
+            </schema>
+            <param name="gui:x" value="-410"/>
+            <param name="gui:y" value="-40"/>
+            <param name="gui:width" value="71"/>
+        </stream>
+        <stream name="FillAnother">
+            <property name="description" value="sbfeedsim into the FillAnother input stream for better control over fill rates"/>
+            <schema>
+                <field name="time" type="timestamp"/>
+            </schema>
+            <param name="gui:x" value="-311"/>
+            <param name="gui:y" value="23"/>
+            <param name="gui:width" value="70"/>
+        </stream>
+        <stream name="StartFills">
+            <property name="description" value="this allows for the start of fills to be delay, if you want to simulate pre-market order submission.&#13;&#10;the default for this state is with the"/>
+            <schema>
+                <field description="any value including null" name="go" type="bool"/>
+            </schema>
+            <param name="gui:x" value="-302"/>
+            <param name="gui:y" value="85"/>
+            <param name="gui:width" value="70"/>
+        </stream>
+        <box name="FIXServerInput" type="inputadapter">
+            <property name="description" value="This adapter receives FIX messages from FIXOutput_1 and routes them appropriately."/>
+            <output port="1" stream="AppMsgFromFIXAdapter_1"/>
+            <output port="2" stream="NOSMsgFromFixOutput_DEBUG"/>
+            <output port="3" stream="out:FIXServerInput_3"/>
+            <output port="4" stream="out:FIXServerInput_4"/>
+            <output port="5" stream="AdminMsgFromFIXAdapter_1"/>
+            <param name="start:state" value="true"/>
+            <param name="javaclass" value="com.streambase.sb.adapter.fix.input.FIXInput"/>
+            <param name="appMessageSchema0" value="FIXMessages"/>
+            <param name="appMessageSchema1" value="FIX_4_2_MsgType_D_NewOrderSingle"/>
+            <param name="appMessageSchema2" value="FIX_4_2_MsgType_F_OrderCancel"/>
+            <param name="appMessageSchema3" value="FIX_4_2_MsgType_F_OrderCancel"/>
+            <param name="appMessageSchema4" value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;&#13;&#10;&lt;schema name=&quot;schema:FIXServerInput&quot;/&gt;&#13;&#10;"/>
+            <param name="appMessageSchema5" value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;&#13;&#10;&lt;schema name=&quot;schema:FIXServerInput&quot;/&gt;&#13;&#10;"/>
+            <param name="appMessageSchema6" value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;&#13;&#10;&lt;schema name=&quot;schema:FIXServerInput&quot;/&gt;&#13;&#10;"/>
+            <param name="appMessageSchema7" value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;&#13;&#10;&lt;schema name=&quot;schema:FIXServerInput&quot;/&gt;&#13;&#10;"/>
+            <param name="appMessageSchema8" value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;&#13;&#10;&lt;schema name=&quot;schema:FIXServerInput&quot;/&gt;&#13;&#10;"/>
+            <param name="appMessageSchema9" value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;&#13;&#10;&lt;schema name=&quot;schema:FIXServerInput&quot;/&gt;&#13;&#10;"/>
+            <param name="fieldNameMapFile" value=""/>
+            <param name="fixAdminMessageInterceptor" value=""/>
+            <param name="fixConfigFile" value="fix-adapter-2.cfg"/>
+            <param name="fixEngine" value="QuickFIX/J"/>
+            <param name="incomingFilter" value=""/>
+            <param name="incomingFilterType" value="Include"/>
+            <param name="isLinkedToAdapter" value="true"/>
+            <param name="isLoggingIncomingMessages" value="false"/>
+            <param name="isLoggingOutgoingMessages" value="false"/>
+            <param name="isReportingProfilingData" value="false"/>
+            <param name="linkedAdapter" value="FIXServerOutput"/>
+            <param name="logLevel" value="INFO"/>
+            <param name="logonAtStartup" value="true"/>
+            <param name="messagePortRoutings.0" value="*"/>
+            <param name="messagePortRoutings.1" value="D"/>
+            <param name="messagePortRoutings.2" value="F"/>
+            <param name="messagePortRoutings.3" value="G"/>
+            <param name="outgoingFilter" value=""/>
+            <param name="outgoingFilterType" value="Include"/>
+            <param name="profilingDataReportingInterval" value="10000"/>
+            <param name="useAdminPort" value="true"/>
+            <param name="useCommandInputPort" value="false"/>
+            <param name="useSenderLocationIDToNameSession" value="false"/>
+            <param name="useSenderSubIDToNameSession" value="false"/>
+            <param name="useTargetLocationIDToNameSession" value="false"/>
+            <param name="useTargetSubIDToNameSession" value="false"/>
+            <param name="gui:x" value="-781"/>
+            <param name="gui:y" value="291"/>
+            <param name="gui:width" value="70"/>
+        </box>
+        <output-stream name="AdminMsgFromFIXAdapter_1">
+            <property name="description" value="This receives admin messages sent from FIXInput_1."/>
+            <param name="gui:x" value="-671"/>
+            <param name="gui:y" value="432"/>
+            <param name="gui:width" value="70"/>
+            <param name="gui:bends:1" value="-692,335;-692,461"/>
+        </output-stream>
+        <output-stream name="AppMsgFromFIXAdapter_1">
+            <property name="description" value="This stream receives all incoming FIX messages from FIXAdapter1 EXCEPT for messages of type D (type D messages are routed to a different port -- see FIXInput_2's 'Port Management' property tab)."/>
+            <param name="gui:x" value="-676"/>
+            <param name="gui:y" value="213"/>
+            <param name="gui:width" value="70"/>
+            <param name="gui:bends:1" value="-692,307;-692,243"/>
+        </output-stream>
+        <output-stream name="NOSMsgFromFixOutput_DEBUG">
+            <property name="description" value="This receives all type 'D' (New Order Single) FIX messages received by FIXInput_1. While not necessary to the logic of the application, it is useful for debugging purposes."/>
+            <param name="gui:x" value="-655"/>
+            <param name="gui:y" value="359"/>
+            <param name="gui:width" value="70"/>
+            <param name="gui:bends:1" value="-684,313;-684,387"/>
+        </output-stream>
+        <box name="Log1" type="outputadapter">
+            <input port="1" stream="NOSMsgFromFixOutput_DEBUG"/>
+            <output port="1" stream="out:Log1_1"/>
+            <param name="start:state" value="true"/>
+            <param name="javaclass" value="com.streambase.sb.adapter.logger.Log"/>
+            <param name="logLevel" value="Info"/>
+            <param name="messageIdentifier" value="SBlogFixSvrIn"/>
+            <param name="gui:x" value="-671"/>
+            <param name="gui:y" value="291"/>
+            <param name="gui:width" value="70"/>
+            <param name="gui:bends:1" value="-692,313;-692,320"/>
+        </box>
+        <module-reference name="OrderFill">
+            <property name="description" value="this order fill module will periodically fill orders at a certain rate"/>
+            <input name="Constants" port="1" stream="Constants"/>
+            <input name="FillAnother" port="2" stream="FillAnother"/>
+            <input name="StartFills" port="3" stream="StartFills"/>
+            <output name="FillOutputStream" port="1" stream="out:OrderFill_1"/>
+            <param name="parallel" value="true"/>
+            <param name="file" value="com.tibco.sb.compexch.fix_venuesimulator.venuesimulation.fixServerOrderFillModule"/>
+            <input-dataref name="VenueOrdersUnfilled" table="VenueOrdersUnfilled"/>
+            <param name="gui:x" value="-157"/>
+            <param name="gui:y" value="7"/>
+            <param name="gui:width" value="70"/>
+        </module-reference>
+        <box name="Union3" type="union">
+            <input port="1" stream="out:FIXServerInput_3"/>
+            <input port="2" stream="out:FIXServerInput_4"/>
+            <output port="1" stream="out:Union3_1"/>
+            <param name="strict" value="false"/>
+            <param name="gui:x" value="-961"/>
+            <param name="gui:y" value="673"/>
+            <param name="gui:width" value="63"/>
+            <param name="gui:height" value="64"/>
+            <param name="gui:bends:1" value="-692,321;-692,572;-984,572;-984,691"/>
+            <param name="gui:bends:2" value="-700,328;-700,540;-1000,540;-1000,716"/>
+        </box>
+        <box name="CancelOrReplace" type="filter">
+            <input port="1" stream="out:Union3_1"/>
+            <output port="1" stream="out:CancelOrReplace_1"/>
+            <output port="2" stream="out:CancelOrReplace_2"/>
+            <param name="autogen-nomatch-port" value="true"/>
+            <param name="expression.0" value="input1.MsgType=='F'--cancel"/>
+            <param name="expression.1" value="true"/>
+            <param name="gui:x" value="-869"/>
+            <param name="gui:y" value="673"/>
+            <param name="gui:width" value="71"/>
+            <param name="gui:height" value="63"/>
+        </box>
+        <box name="LogFill" type="outputadapter">
+            <input port="1" stream="out:OrderFill_1"/>
+            <output port="1" stream="out:LogFill_1"/>
+            <param name="start:state" value="true"/>
+            <param name="javaclass" value="com.streambase.sb.adapter.logger.Log"/>
+            <param name="logLevel" value="Info"/>
+            <param name="messageIdentifier" value="Log1Fill"/>
+            <param name="gui:x" value="3"/>
+            <param name="gui:y" value="8"/>
+            <param name="gui:width" value="70"/>
+        </box>
+        <box name="OrderIDSequence0" type="seqnum">
+            <property name="description" value="Generates a new OrderID for the outgoing Execution Report message."/>
+            <input port="1" stream="out:Log1_1"/>
+            <output port="1" stream="out:OrderIDSequence0_1"/>
+            <param name="output-field" value="newOrderID"/>
+            <param name="sequence-id" value="seq_OrderID"/>
+            <param name="update-expression" value="seq_OrderID + 1"/>
+            <param name="gui:x" value="-561"/>
+            <param name="gui:y" value="291"/>
+            <param name="gui:width" value="70"/>
+        </box>
+        <box name="CancelCheck" type="query">
+            <input port="1" stream="out:CancelOrReplace_1"/>
+            <output port="1" stream="out:CancelCheck_1"/>
+            <dataref id="querytable" name="VenueOrdersUnfilled"/>
+            <param name="operation" value="delete"/>
+            <param name="where" value="primary-key"/>
+            <param name="key-field.0" value="ClOrdID"/>
+            <param name="key-lowerbound-value.0" value="input1.OrigClOrdID"/>
+            <param name="key-lowerbound-operation.0" value="eq"/>
+            <param name="write-type" value="insert"/>
+            <param name="if-write-fails" value="ignore"/>
+            <param name="no-match-mode" value="output-no-match-null"/>
+            <param name="order-by-direction" value="none"/>
+            <target-list>
+                <item name="input" prefix="rqst_" selection="all"/>
+                <item name="old" selection="all"/>
+                <item name="new" selection="none"/>
+                <item name="current" selection="none"/>
+            </target-list>
+            <target-list name="insert">
+                <item name="input" selection="none"/>
+            </target-list>
+            <target-list name="update">
+                <item name="input" selection="none"/>
+            </target-list>
+            <target-list name="no-match">
+                <item name="input" selection="none"/>
+                <expressions>
+                    <set field="BeginString">null</set>
+                    <set field="MsgType">null</set>
+                    <set field="SenderCompID">null</set>
+                    <set field="TargetCompID">null</set>
+                    <set field="OrderQty">null</set>
+                    <set field="Price">null</set>
+                    <set field="Side">null</set>
+                    <set field="OrderID">null</set>
+                    <set field="ClOrdID">null</set>
+                    <set field="Symbol">null</set>
+                    <set field="OrdStatus">null</set>
+                    <set field="OrdType">null</set>
+                    <set field="LeavesQty">null</set>
+                    <set field="ExecID">null</set>
+                    <set field="ExecTransType">null</set>
+                    <set field="ExecType">null</set>
+                    <set field="CumQty">null</set>
+                    <set field="AvgPx">null</set>
+                    <set field="LastPx">null</set>
+                    <set field="LastShares">null</set>
+                    <set field="TimeInForce">null</set>
+                    <set field="Text">null</set>
+                    <set field="TransactTime">null</set>
+                </expressions>
+            </target-list>
+            <param name="gui:x" value="-795"/>
+            <param name="gui:y" value="629"/>
+            <param name="gui:width" value="71"/>
+        </box>
+        <box name="ExecID1" type="seqnum">
+            <input port="1" stream="out:OrderIDSequence0_1"/>
+            <output port="1" stream="out:ExecID1_1"/>
+            <param name="output-field" value="ExecIDnew"/>
+            <param name="sequence-id" value="sequenceEIDid"/>
+            <param name="update-expression" value="sequenceEIDid + 1"/>
+            <param name="gui:x" value="-451"/>
+            <param name="gui:y" value="291"/>
+            <param name="gui:width" value="70"/>
+        </box>
+        <box name="replace" type="query">
+            <input port="1" stream="out:CancelOrReplace_2"/>
+            <output port="1" stream="out:replace_1"/>
+            <dataref id="querytable" name="VenueOrdersUnfilled"/>
+            <param name="operation" value="write"/>
+            <param name="where" value="primary-key"/>
+            <param name="key-field.0" value="ClOrdID"/>
+            <param name="key-value.0" value="input1.OrigClOrdID"/>
+            <param name="write-type" value="update"/>
+            <param name="if-write-fails" value="output-no-match"/>
+            <param name="no-match-mode" value="output-no-match-explicit"/>
+            <param name="order-by-direction" value="none"/>
+            <target-list>
+                <item name="input" prefix="rqst_" selection="all"/>
+                <item name="old" selection="none"/>
+                <item name="new" selection="all"/>
+                <item name="current" selection="none"/>
+            </target-list>
+            <target-list name="insert">
+                <item name="input" selection="none"/>
+            </target-list>
+            <target-list name="update">
+                <item name="input" selection="none"/>
+                <expressions>
+                    <set field="OrderQty">input1.OrderQty</set>
+                    <set field="LeavesQty">old.LeavesQty +(input1.OrderQty - old.OrderQty)</set>
+                    <set field="LastShares">0.0</set>
+                </expressions>
+            </target-list>
+            <target-list name="no-match">
+                <item name="input" selection="none"/>
+                <expressions>
+                    <set field="BeginString">string(null)</set>
+                    <set field="MsgType">string(null)</set>
+                    <set field="SenderCompID">string(null)</set>
+                    <set field="TargetCompID">string(null)</set>
+                    <set field="OrderQty">double(null)</set>
+                    <set field="Price">double(null)</set>
+                    <set field="Side">string(null)</set>
+                    <set field="OrderID">string(null)</set>
+                    <set field="Symbol">string(null)</set>
+                    <set field="OrdStatus">string(null)</set>
+                    <set field="OrdType">string(null)</set>
+                    <set field="LeavesQty">double(null)</set>
+                    <set field="ExecID">string(null)</set>
+                    <set field="ExecTransType">string(null)</set>
+                    <set field="ExecType">string(null)</set>
+                    <set field="CumQty">double(null)</set>
+                    <set field="AvgPx">double(null)</set>
+                    <set field="LastPx">double(null)</set>
+                    <set field="LastShares">double(null)</set>
+                    <set field="TimeInForce">string(null)</set>
+                    <set field="Text">string(null)</set>
+                    <set field="TransactTime">string(null)</set>
+                </expressions>
+            </target-list>
+            <param name="gui:x" value="-791"/>
+            <param name="gui:y" value="751"/>
+            <param name="gui:width" value="71"/>
+        </box>
+        <box name="ExecACK" type="map">
+            <property name="description" value="Convert incoming NOS into an Execution Report &quot;Ack&quot; (OrdStatus=New) message"/>
+            <input port="1" stream="out:ExecID1_1"/>
+            <output port="1" stream="NewOrderInserted_DEBUG"/>
+            <target-list>
+                <item name="input" selection="all">
+                    <remove field="ExecIDnew"/>
+                    <remove field="newOrderID"/>
+                    <replace field="MsgType">'8'</replace>
+                    <replace field="OrderID">string(newOrderID)</replace>
+                </item>
+                <expressions>
+                    <include field="OrdStatus">'8'--rejected</include>
+                    <include field="OrdRejReason">'5'</include>
+                    <include field="LeavesQty">OrderQty</include>
+                    <include field="CumQty">0</include>
+                    <include field="AvgPx">0.0</include>
+                    <include field="ExecID">string(ExecIDnew)</include>
+                    <include field="ExecType">'8'--rejected</include>
+                    <include field="ExecTransType">'0'</include>
+                    <include field="LastPx">double(null)</include>
+                    <include field="LastShares">double(0)</include>
+                </expressions>
+            </target-list>
+            <param name="gui:x" value="-360"/>
+            <param name="gui:y" value="290"/>
+        </box>
+        <box name="Union4" type="union">
+            <input port="1" stream="out:CancelCheck_1"/>
+            <input port="2" stream="out:replace_1"/>
+            <output port="1" stream="out:Union4_1"/>
+            <param name="strict" value="false"/>
+            <param name="gui:x" value="-687"/>
+            <param name="gui:y" value="658"/>
+            <param name="gui:width" value="71"/>
+            <param name="gui:height" value="63"/>
+        </box>
+        <output-stream name="NewOrderInserted_DEBUG" scope="public">
+            <param name="gui:x" value="-266"/>
+            <param name="gui:y" value="209"/>
+        </output-stream>
+        <box name="ExecID4" type="seqnum">
+            <input port="1" stream="out:Union4_1"/>
+            <output port="1" stream="out:ExecID4_1"/>
+            <param name="output-field" value="ExecIDnew"/>
+            <param name="sequence-id" value="sequenceEIDid"/>
+            <param name="update-expression" value="sequenceEIDid + 1"/>
+            <param name="gui:x" value="-609"/>
+            <param name="gui:y" value="657"/>
+            <param name="gui:width" value="71"/>
+        </box>
+        <box name="IOC" type="filter">
+            <input port="1" stream="NewOrderInserted_DEBUG"/>
+            <output port="1" stream="out:IOC_1"/>
+            <output port="2" stream="out:IOC_2"/>
+            <output port="3" stream="out:IOC_3"/>
+            <param name="autogen-nomatch-port" value="true"/>
+            <param name="expression.0" value="isnull(input1.TimeInForce) || (int(TimeInForce) &lt; 3)"/>
+            <param name="expression.1" value="TimeInForce == '3'"/>
+            <param name="expression.2" value="true"/>
+            <param name="gui:x" value="-231"/>
+            <param name="gui:y" value="291"/>
+            <param name="gui:width" value="70"/>
+        </box>
+        <box name="flds1" type="map">
+            <input port="1" stream="out:ExecID4_1"/>
+            <output port="1" stream="out:flds1_1"/>
+            <target-list>
+                <item name="input" selection="none">
+                    <include field="rqst_MsgType"/>
+                    <include field="rqst_ClOrdID"/>
+                    <include field="rqst_OrigClOrdID"/>
+                    <include field="AvgPx"/>
+                    <include field="Side"/>
+                    <include field="Symbol"/>
+                    <include field="Text"/>
+                    <include field="TimeInForce"/>
+                    <include field="TransactTime"/>
+                    <include field="BeginString"/>
+                    <include field="ClOrdID"/>
+                    <include field="CumQty"/>
+                    <include field="ExecID"/>
+                    <include field="ExecIDnew"/>
+                    <include field="ExecTransType"/>
+                    <include field="ExecType"/>
+                    <include field="LastPx"/>
+                    <include field="LastShares"/>
+                    <include field="LeavesQty"/>
+                    <include field="MsgType"/>
+                    <include field="OrderID"/>
+                    <include field="OrderQty"/>
+                    <include field="OrdStatus"/>
+                    <include field="OrdType"/>
+                    <include field="Price"/>
+                </item>
+                <expressions>
+                    <include field="SenderCompID">rqst_SenderCompID</include>
+                    <include field="TargetCompID">rqst_TargetCompID</include>
+                </expressions>
+            </target-list>
+            <param name="gui:x" value="-550"/>
+            <param name="gui:y" value="687"/>
+            <param name="gui:width" value="70"/>
+        </box>
+        <box name="IOCcounter" type="seqnum">
+            <input port="1" stream="out:IOC_2"/>
+            <output port="1" stream="out:IOCcounter_1"/>
+            <param name="output-field" value="IOCfillRateCount"/>
+            <param name="sequence-id" value="IOCfillRateCountID"/>
+            <param name="update-expression" value="IOCfillRateCountID + 1"/>
+            <param name="gui:x" value="77"/>
+            <param name="gui:y" value="677"/>
+            <param name="gui:width" value="70"/>
+            <param name="gui:bends:1" value="-20,320;-20,705"/>
+        </box>
+        <box name="NewOrdrIns1" type="query">
+            <input port="1" stream="out:IOC_1"/>
+            <output port="1" stream="out:NewOrdrIns1_1"/>
+            <dataref id="querytable" name="VenueOrdersUnfilled"/>
+            <param name="operation" value="write"/>
+            <param name="where" value="primary-key"/>
+            <param name="key-field.0" value="ClOrdID"/>
+            <param name="key-value.0" value="input1.ClOrdID"/>
+            <param name="write-type" value="insert"/>
+            <param name="if-write-fails" value="ignore"/>
+            <param name="no-match-mode" value="output-no-match-nothing"/>
+            <param name="order-by-direction" value="none"/>
+            <target-list>
+                <item name="input" selection="all"/>
+                <item name="old" selection="none"/>
+                <item name="new" selection="none"/>
+                <item name="current" selection="none"/>
+            </target-list>
+            <target-list name="insert">
+                <item name="input" selection="none"/>
+                <expressions>
+                    <set field="BeginString">input.BeginString</set>
+                    <set field="MsgType">input.MsgType</set>
+                    <set field="SenderCompID">input.SenderCompID</set>
+                    <set field="TargetCompID">input.TargetCompID</set>
+                    <set field="OrderQty">input.OrderQty</set>
+                    <set field="Price">input.Price</set>
+                    <set field="Side">input.Side</set>
+                    <set field="OrderID">input.OrderID</set>
+                    <set field="Symbol">input.Symbol</set>
+                    <set field="OrdStatus">input.OrdStatus</set>
+                    <set field="OrdType">input.OrdType</set>
+                    <set field="LeavesQty">input.LeavesQty</set>
+                    <set field="ExecID">input.ExecID</set>
+                    <set field="ExecTransType">input.ExecTransType</set>
+                    <set field="ExecType">input.ExecType</set>
+                    <set field="CumQty">input.CumQty</set>
+                    <set field="AvgPx">input.AvgPx</set>
+                    <set field="LastPx">input.LastPx</set>
+                    <set field="LastShares">input.LastShares</set>
+                    <set field="TimeInForce">input.TimeInForce</set>
+                    <set field="TransactTime">input.TransactTime</set>
+                </expressions>
+            </target-list>
+            <target-list name="update">
+                <item name="input" selection="none"/>
+            </target-list>
+            <target-list name="no-match">
+                <item name="input" selection="none"/>
+            </target-list>
+            <param name="gui:x" value="-121"/>
+            <param name="gui:y" value="209"/>
+            <param name="gui:width" value="70"/>
+            <param name="gui:bends:1" value="-141,308;-141,238"/>
+        </box>
+        <box name="TIFreject" type="map">
+            <property name="description" value="reject FOK and other TIFs that are not implemented"/>
+            <input port="1" stream="out:IOC_3"/>
+            <output port="1" stream="out:TIFreject_1"/>
+            <target-list>
+                <item name="input" selection="all">
+                    <replace field="MsgType">'8'</replace>
+                </item>
+                <expressions>
+                    <replace field="AvgPx">0.0</replace>
+                    <replace field="LastPx">double(null)</replace>
+                    <replace field="LastShares">double(0)</replace>
+                    <replace field="OrdRejReason">'5'</replace>
+                    <include field="Text">"TIF not implemented"</include>
+                </expressions>
+            </target-list>
+            <param name="gui:x" value="-121"/>
+            <param name="gui:y" value="353"/>
+            <param name="gui:height" value="71"/>
+            <param name="gui:bends:1" value="-145,332;-145,388"/>
+        </box>
+        <box name="CanCancel" type="filter">
+            <input port="1" stream="out:flds1_1"/>
+            <output port="1" stream="out:CanCancel_1"/>
+            <output port="2" stream="out:CanCancel_2"/>
+            <output port="3" stream="out:CanCancel_3"/>
+            <param name="autogen-nomatch-port" value="true"/>
+            <param name="expression.0" value="notnull(input1.ClOrdID) AND (input1.rqst_MsgType == 'F')"/>
+            <param name="expression.1" value="notnull(input1.ClOrdID) AND (input1.rqst_MsgType == 'G')"/>
+            <param name="expression.2" value="true"/>
+            <param name="gui:x" value="-490"/>
+            <param name="gui:y" value="655"/>
+            <param name="gui:width" value="71"/>
+            <param name="gui:height" value="63"/>
+        </box>
+        <box name="IOChandler" type="filter">
+            <input port="1" stream="out:IOCcounter_1"/>
+            <output port="1" stream="out:IOChandler_1"/>
+            <output port="2" stream="out:IOChandler_2"/>
+            <param name="autogen-nomatch-port" value="true"/>
+            <param name="expression.0" value="(input1.IOCfillRateCount % DV_IOCFillRt) == 0"/>
+            <param name="expression.1" value="true"/>
+            <param name="gui:x" value="171"/>
+            <param name="gui:y" value="679"/>
+            <param name="gui:height" value="63"/>
+        </box>
+        <box name="LogACK" type="outputadapter">
+            <input port="1" stream="out:NewOrdrIns1_1"/>
+            <output port="1" stream="out:LogACK_1"/>
+            <param name="start:state" value="true"/>
+            <param name="javaclass" value="com.streambase.sb.adapter.logger.Log"/>
+            <param name="logLevel" value="Info"/>
+            <param name="messageIdentifier" value="Log1ACK"/>
+            <param name="gui:x" value="56"/>
+            <param name="gui:y" value="210"/>
+            <param name="gui:width" value="70"/>
+            <param name="gui:bends:1" value="3,238;3,239"/>
+        </box>
+        <box name="CancelIOC" type="map">
+            <property name="description" value="Convert incoming NOS into an Execution Report"/>
+            <input port="1" stream="out:IOChandler_2"/>
+            <output port="1" stream="out:CancelIOC_1"/>
+            <target-list>
+                <item name="input" selection="all">
+                    <replace field="MsgType">'8'</replace>
+                    <remove field="IOCfillRateCount"/>
+                </item>
+                <expressions>
+                    <replace field="OrdStatus">'4'-- rejected</replace>
+                    <replace field="LeavesQty">OrderQty</replace>
+                    <replace field="CumQty">0</replace>
+                    <replace field="AvgPx">0.0</replace>
+                    <replace field="ExecType">'4'-- rejected</replace>
+                    <replace field="ExecTransType">'0'</replace>
+                    <replace field="LastPx">double(null)</replace>
+                    <replace field="LastShares">double(0)</replace>
+                </expressions>
+            </target-list>
+            <param name="gui:x" value="294"/>
+            <param name="gui:y" value="598"/>
+            <param name="gui:width" value="70"/>
+        </box>
+        <box name="CancelledMessage" type="map">
+            <property name="description" value="Convert incoming NOS into an Execution Report &quot;Ack&quot; (OrdStatus=New) message"/>
+            <input port="1" stream="out:CanCancel_1"/>
+            <output port="1" stream="out:CancelledMessage_1"/>
+            <target-list>
+                <item name="input" selection="all">
+                    <remove field="ExecIDnew"/>
+                    <replace field="MsgType">'8'</replace>
+                    <replace field="ClOrdID">input1.rqst_OrigClOrdID</replace>
+                </item>
+                <expressions>
+                    <replace field="OrdStatus">'4'</replace>
+                    <replace field="LeavesQty">OrderQty</replace>
+                    <replace field="CumQty">0</replace>
+                    <replace field="AvgPx">0.0</replace>
+                    <replace field="ExecID">string(ExecIDnew)</replace>
+                    <replace field="ExecType">'4'</replace>
+                    <replace field="ExecTransType">'1'</replace>
+                    <replace field="LastPx">double(null)</replace>
+                    <replace field="LastShares">double(0)</replace>
+                </expressions>
+            </target-list>
+            <param name="gui:x" value="-403"/>
+            <param name="gui:y" value="585"/>
+            <param name="gui:width" value="71"/>
+        </box>
+        <box name="CancelRejectTooLate" type="map">
+            <property name="description" value="Convert incoming NOS into an Execution Report &quot;Ack&quot; (OrdStatus=New) message"/>
+            <input port="1" stream="out:CanCancel_3"/>
+            <output port="1" stream="out:CancelRejectTooLate_1"/>
+            <target-list>
+                <item name="input" selection="all">
+                    <remove field="ExecIDnew"/>
+                    <replace field="MsgType">'8'</replace>
+                    <remove field="ExecTransType"/>
+                    <remove field="ExecType"/>
+                </item>
+                <expressions>
+                    <replace field="AvgPx">0.0</replace>
+                    <replace field="ExecID">string(ExecIDnew)</replace>
+                    <replace field="LastPx">double(null)</replace>
+                    <replace field="LastShares">double(0)</replace>
+                    <include field="CxlRejResponseTo">'1'</include>
+                </expressions>
+            </target-list>
+            <param name="gui:x" value="-399"/>
+            <param name="gui:y" value="751"/>
+            <param name="gui:width" value="71"/>
+        </box>
+        <box name="clean1" type="map">
+            <input port="1" stream="out:IOChandler_1"/>
+            <output port="1" stream="out:clean1_1"/>
+            <target-list>
+                <item name="input" selection="all">
+                    <remove field="IOCfillRateCount"/>
+                </item>
+            </target-list>
+            <param name="gui:x" value="289"/>
+            <param name="gui:y" value="698"/>
+            <param name="gui:width" value="70"/>
+        </box>
+        <box name="ReplacedMessage" type="map">
+            <input port="1" stream="out:CanCancel_2"/>
+            <output port="1" stream="out:ReplacedMessage_1"/>
+            <target-list>
+                <item name="input" selection="all">
+                    <remove field="ExecIDnew"/>
+                    <replace field="MsgType">'8'</replace>
+                    <replace field="ClOrdID">input1.rqst_OrigClOrdID</replace>
+                </item>
+                <expressions>
+                    <replace field="OrdStatus">'5'</replace>
+                    <replace field="LeavesQty">OrderQty</replace>
+                    <replace field="CumQty">0</replace>
+                    <replace field="AvgPx">0.0</replace>
+                    <replace field="ExecID">string(ExecIDnew)</replace>
+                    <replace field="ExecType">'5'</replace>
+                    <replace field="ExecTransType">'0'</replace>
+                    <replace field="LastPx">double(null)</replace>
+                    <replace field="LastShares">double(0)</replace>
+                </expressions>
+            </target-list>
+            <param name="gui:x" value="-398"/>
+            <param name="gui:y" value="668"/>
+            <param name="gui:width" value="71"/>
+        </box>
+        <box name="IOC_Ack_Fill" type="split">
+            <input port="1" stream="out:clean1_1"/>
+            <output port="1" stream="out:IOC_Ack_Fill_1"/>
+            <output port="2" stream="out:IOC_Ack_Fill_2"/>
+            <param name="output-count" value="2"/>
+            <param name="gui:x" value="384"/>
+            <param name="gui:y" value="698"/>
+            <param name="gui:width" value="70"/>
+        </box>
+        <box name="Logcancel" type="outputadapter">
+            <input port="1" stream="out:CancelledMessage_1"/>
+            <output port="1" stream="out:Logcancel_1"/>
+            <param name="start:state" value="true"/>
+            <param name="javaclass" value="com.streambase.sb.adapter.logger.Log"/>
+            <param name="logLevel" value="Info"/>
+            <param name="messageIdentifier" value="Log1Cancelled"/>
+            <param name="gui:x" value="-238"/>
+            <param name="gui:y" value="587"/>
+            <param name="gui:width" value="71"/>
+        </box>
+        <box name="LogReject" type="outputadapter">
+            <input port="1" stream="out:CancelRejectTooLate_1"/>
+            <output port="1" stream="out:LogReject_1"/>
+            <param name="start:state" value="true"/>
+            <param name="javaclass" value="com.streambase.sb.adapter.logger.Log"/>
+            <param name="logLevel" value="Info"/>
+            <param name="messageIdentifier" value="Log1CancelReject"/>
+            <param name="gui:x" value="-242"/>
+            <param name="gui:y" value="751"/>
+            <param name="gui:width" value="71"/>
+        </box>
+        <box name="LogReplace" type="outputadapter">
+            <input port="1" stream="out:ReplacedMessage_1"/>
+            <output port="1" stream="out:LogReplace_1"/>
+            <param name="start:state" value="true"/>
+            <param name="javaclass" value="com.streambase.sb.adapter.logger.Log"/>
+            <param name="logLevel" value="Info"/>
+            <param name="messageIdentifier" value="Log1Replaced"/>
+            <param name="gui:x" value="-236"/>
+            <param name="gui:y" value="664"/>
+            <param name="gui:width" value="71"/>
+        </box>
+        <box name="ExecID3" type="seqnum">
+            <property name="description" value="Generates a new OrderID for the outgoing Execution Report message."/>
+            <input port="1" stream="out:IOC_Ack_Fill_2"/>
+            <output port="1" stream="out:ExecID3_1"/>
+            <param name="output-field" value="ExecIDnew"/>
+            <param name="sequence-id" value="sequenceEIDid"/>
+            <param name="update-expression" value="sequenceEIDid + 1"/>
+            <param name="gui:x" value="494"/>
+            <param name="gui:y" value="710"/>
+            <param name="gui:width" value="70"/>
+            <param name="gui:bends:1" value="471,739;471,738"/>
+        </box>
+        <box name="Ucr" type="union">
+            <input port="1" stream="out:Logcancel_1"/>
+            <input port="2" stream="out:LogReplace_1"/>
+            <input port="3" stream="out:LogReject_1"/>
+            <output port="1" stream="out:Ucr_1"/>
+            <param name="strict" value="false"/>
+            <param name="gui:x" value="-110"/>
+            <param name="gui:y" value="658"/>
+            <param name="gui:width" value="71"/>
+            <param name="gui:height" value="63"/>
+            <param name="gui:bends:1" value="-145,615;-145,675"/>
+            <param name="gui:bends:2" value="-133,692;-133,688"/>
+            <param name="gui:bends:3" value="-157,780;-157,701"/>
+        </box>
+        <box name="ExecFillCopy" type="map">
+            <property name="description" value="Convert incoming NOS into an Execution Report &quot;Ack&quot; (OrdStatus=New) message"/>
+            <input port="1" stream="out:ExecID3_1"/>
+            <output port="1" stream="out:ExecFillCopy_1"/>
+            <target-list>
+                <item name="input" selection="all">
+                    <replace field="MsgType">'8'</replace>
+                    <remove field="ExecIDnew"/>
+                </item>
+                <expressions>
+                    <replace field="OrdStatus">'2'</replace>
+                    <replace field="LeavesQty">int(0)</replace>
+                    <replace field="CumQty">input1.OrderQty</replace>
+                    <replace field="AvgPx">Price</replace>
+                    <replace field="ExecID">string(ExecIDnew)</replace>
+                    <replace field="ExecType">'2'</replace>
+                    <replace field="ExecTransType">'0'</replace>
+                    <replace field="LastShares">OrderQty-CumQty</replace>
+                    <replace field="LastPx">Price</replace>
+                </expressions>
+            </target-list>
+            <param name="gui:x" value="604"/>
+            <param name="gui:y" value="710"/>
+            <param name="gui:width" value="70"/>
+        </box>
+        <box name="Union1" type="union">
+            <input port="1" stream="out:CancelIOC_1"/>
+            <input port="2" stream="out:IOC_Ack_Fill_1"/>
+            <input port="3" stream="out:ExecFillCopy_1"/>
+            <output port="1" stream="out:Union1_1"/>
+            <param name="strict" value="false"/>
+            <param name="gui:x" value="670"/>
+            <param name="gui:y" value="620"/>
+            <param name="gui:width" value="70"/>
+            <param name="gui:bends:1" value="522,627;522,636"/>
+            <param name="gui:bends:2" value="479,714;479,647"/>
+            <param name="gui:bends:3" value="707,738;707,703;586,703;586,661"/>
+        </box>
+        <box name="AllFIXoutMsgs" type="union">
+            <input port="1" stream="out:LogFill_1"/>
+            <input port="2" stream="out:LogACK_1"/>
+            <input port="3" stream="out:Union1_1"/>
+            <input port="4" stream="out:Ucr_1"/>
+            <input port="5" stream="out:TIFreject_1"/>
+            <output port="1" stream="out:AllFIXoutMsgs_1"/>
+            <param name="strict" value="false"/>
+            <param name="gui:x" value="315"/>
+            <param name="gui:y" value="267"/>
+            <param name="gui:width" value="70"/>
+            <param name="gui:bends:1" value="167,36;167,283"/>
+            <param name="gui:bends:2" value="155,239;155,290"/>
+            <param name="gui:bends:3" value="764,647;764,466;272,466;272,299"/>
+            <param name="gui:bends:4" value="20,688;20,302"/>
+            <param name="gui:bends:5" value="218,388;218,310"/>
+        </box>
+        <box name="CompIDswitch" type="map">
+            <input port="1" stream="out:AllFIXoutMsgs_1"/>
+            <output port="1" stream="out:CompIDswitch_1"/>
+            <target-list>
+                <item name="input" selection="none">
+                    <include field="AvgPx"/>
+                    <include field="BeginString"/>
+                    <include field="ClOrdID"/>
+                    <include field="CumQty"/>
+                    <include field="CxlRejResponseTo"/>
+                    <include field="ExecID"/>
+                    <include field="ExecTransType"/>
+                    <include field="ExecType"/>
+                    <include field="HandlInst"/>
+                    <include field="LastPx"/>
+                    <include field="LastShares"/>
+                    <include field="LeavesQty"/>
+                    <include field="MsgType"/>
+                    <include field="OrderID"/>
+                    <include field="OrderQty"/>
+                    <include field="OrdStatus"/>
+                    <include field="OrdType"/>
+                    <include field="Price"/>
+                    <include field="Side"/>
+                    <include field="Symbol"/>
+                    <include field="Text"/>
+                    <include field="TimeInForce"/>
+                    <include field="TransactTime"/>
+                    <include field="OrdRejReason"/>
+                </item>
+                <expressions>
+                    <include field="SenderCompID">TargetCompID</include>
+                    <include field="TargetCompID">SenderCompID</include>
+                </expressions>
+            </target-list>
+            <param name="gui:x" value="424"/>
+            <param name="gui:y" value="253"/>
+            <param name="gui:width" value="70"/>
+            <param name="gui:bends:1" value="404,295;404,281"/>
+        </box>
+        <box name="LogOutMessage" type="outputadapter">
+            <input port="1" stream="out:CompIDswitch_1"/>
+            <output port="1" stream="out:LogOutMessage_1"/>
+            <param name="start:state" value="true"/>
+            <param name="javaclass" value="com.streambase.sb.adapter.logger.Log"/>
+            <param name="logLevel" value="Info"/>
+            <param name="messageIdentifier" value="Log1SBlogFixSvrOut"/>
+            <param name="gui:x" value="543"/>
+            <param name="gui:y" value="249"/>
+            <param name="gui:width" value="70"/>
+            <param name="gui:bends:1" value="517,281;517,276"/>
+        </box>
+        <box name="FIXServerOutput" type="outputadapter">
+            <property name="description" value="This adapter sends FIX messages to FIXInput_1."/>
+            <input port="1" stream="out:LogOutMessage_1"/>
+            <param name="start:state" value="true"/>
+            <param name="javaclass" value="com.streambase.sb.adapter.fix.output.FIXOutput"/>
+            <param name="fieldNameMapFile" value=""/>
+            <param name="fixAdminMessageInterceptor" value=""/>
+            <param name="fixConfigFile" value="VenueSimulation/config/fix-adapter-server.cfg"/>
+            <param name="fixEngine" value="QuickFIX/J"/>
+            <param name="incomingFilter" value=""/>
+            <param name="incomingFilterType" value="Include"/>
+            <param name="isLoggingIncomingMessages" value="false"/>
+            <param name="isLoggingOutgoingMessages" value="false"/>
+            <param name="isReportingProfilingData" value="false"/>
+            <param name="logLevel" value="INFO"/>
+            <param name="logonAtStartup" value="true"/>
+            <param name="outgoingFilter" value=""/>
+            <param name="outgoingFilterType" value="Include"/>
+            <param name="profilingDataReportingInterval" value="10000"/>
+            <param name="useSenderLocationIDToNameSession" value="false"/>
+            <param name="useSenderSubIDToNameSession" value="false"/>
+            <param name="useTargetLocationIDToNameSession" value="false"/>
+            <param name="useTargetSubIDToNameSession" value="false"/>
+            <param name="gui:x" value="653"/>
+            <param name="gui:y" value="249"/>
+            <param name="gui:width" value="70"/>
+        </box>
+        <gui.note name="See_MetaData_TAB">
+            <property name="description" value="metadata tab explains purpose of this module&#13;&#10;parameters tab contains default values&#13;&#10;definitions tab contains schema info"/>
+            <param name="gui:x" value="-844"/>
+            <param name="gui:y" value="13"/>
+            <param name="gui:width" value="281"/>
+            <param name="gui:height" value="71"/>
+        </gui.note>
+        <gui.note name="WhyConcurrent">
+            <property name="description" value="see the module's metadata tab for an explanation : why this is run concurrently&#13;&#10;&#13;&#10;Visit the operator parameter tab for defaults"/>
+            <note-target name="OrderFill"/>
+            <param name="gui:x" value="2"/>
+            <param name="gui:y" value="-115"/>
+            <param name="gui:width" value="312"/>
+            <param name="gui:height" value="73"/>
+        </gui.note>
+        <gui.note name="assumptions">
+            <property name="description" value="assumption is that we will only increase quantity and nothing else"/>
+            <note-target name="replace"/>
+            <param name="gui:x" value="-949"/>
+            <param name="gui:y" value="737"/>
+            <param name="gui:width" value="70"/>
+            <param name="gui:height" value="70"/>
+        </gui.note>
+        <gui.group color="255,174,174" name="Cancel_Replace_GP" visual-state="open">
+            <property name="description" value="Cancel or Cancel/Replace orders are handled by this group"/>
+            <member name="CancelCheck"/>
+            <member name="ExecID4"/>
+            <member name="CanCancel"/>
+            <member name="CancelRejectTooLate"/>
+            <member name="CancelledMessage"/>
+            <member name="Ucr"/>
+            <member name="Union3"/>
+            <member name="CancelOrReplace"/>
+            <member name="replace"/>
+            <member name="Union4"/>
+            <member name="ReplacedMessage"/>
+            <member name="Logcancel"/>
+            <member name="LogReplace"/>
+            <member name="LogReject"/>
+            <param name="gui:x" value="-1008"/>
+            <param name="gui:y" value="545"/>
+            <param name="gui:width" value="985"/>
+            <param name="gui:height" value="310"/>
+        </gui.group>
+        <gui.group color="192,192,192" name="Data_G" visual-state="open">
+            <member name="VenueOrdersUnfilled"/>
+            <param name="gui:x" value="467"/>
+            <param name="gui:y" value="-24"/>
+            <param name="gui:width" value="180"/>
+            <param name="gui:height" value="124"/>
+        </gui.group>
+        <gui.group color="128,128,255" name="IOC_handler_G" visual-state="open">
+            <property name="description" value="handle IOCs --- cancel every Nth IOC, else ack plus CompleteFill&#13;&#10;&#13;&#10;TODO: should there be some partial IOC fills?  this may depend on venue policy"/>
+            <member name="ExecID3"/>
+            <member name="ExecFillCopy"/>
+            <member name="IOCcounter"/>
+            <member name="CancelIOC"/>
+            <member name="IOChandler"/>
+            <member name="IOC_Ack_Fill"/>
+            <member name="clean1"/>
+            <member name="Union1"/>
+            <param name="gui:x" value="62"/>
+            <param name="gui:y" value="558"/>
+            <param name="gui:width" value="693"/>
+            <param name="gui:height" value="255"/>
+        </gui.group>
+        <gui.group color="128,255,128" name="NewOrderACK_G" visual-state="open">
+            <property name="description" value="processing order requests (new {day, IOC}, cancel, cancel/replace)"/>
+            <member name="FIXServerInput"/>
+            <member name="Log1"/>
+            <member name="OrderIDSequence0"/>
+            <member name="ExecID1"/>
+            <member name="ExecACK"/>
+            <member name="IOC"/>
+            <member name="NewOrdrIns1"/>
+            <member name="AdminMsgFromFIXAdapter_1"/>
+            <member name="AppMsgFromFIXAdapter_1"/>
+            <member name="NOSMsgFromFixOutput_DEBUG"/>
+            <member name="NewOrderInserted_DEBUG"/>
+            <member name="TIFreject"/>
+            <param name="gui:x" value="-796"/>
+            <param name="gui:y" value="169"/>
+            <param name="gui:width" value="764"/>
+            <param name="gui:height" value="352"/>
+        </gui.group>
+        <gui.group color="128,255,255" name="PartialFillAlgo_G" visual-state="open">
+            <property name="description" value="this group will take unfilled orders and do partial and complete fills at a predetermined rate"/>
+            <member name="OrderFill"/>
+            <param name="gui:x" value="-172"/>
+            <param name="gui:y" value="-33"/>
+            <param name="gui:width" value="161"/>
+            <param name="gui:height" value="152"/>
+        </gui.group>
+        <gui.group color="255,128,192" name="Rates" visual-state="open">
+            <property name="description" value="use this stream to set up some rates of cancel or IOC fill"/>
+            <member name="Constants"/>
+            <param name="gui:x" value="-424"/>
+            <param name="gui:y" value="-74"/>
+            <param name="gui:width" value="101"/>
+            <param name="gui:height" value="125"/>
+        </gui.group>
+        <gui.group color="255,188,155" name="VenueOutMessage" visual-state="open">
+            <property name="description" value="all message from Venue back to originator over same session"/>
+            <member name="CompIDswitch"/>
+            <member name="LogOutMessage"/>
+            <member name="FIXServerOutput"/>
+            <member name="AllFIXoutMsgs"/>
+            <param name="gui:x" value="295"/>
+            <param name="gui:y" value="209"/>
+            <param name="gui:width" value="444"/>
+            <param name="gui:height" value="162"/>
+        </gui.group>
+    </add>
+</modify>

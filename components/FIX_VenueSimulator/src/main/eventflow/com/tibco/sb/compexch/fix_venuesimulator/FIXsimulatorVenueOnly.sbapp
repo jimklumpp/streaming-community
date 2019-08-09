@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<modify version="10.5.0-SNAPSHOT_a8f4a008b96ea7ff9200c11cd2c5388579e1621f">
+    <add>
+        <gui.metadata>
+            <property name="description" value="depending on module param settings (see each module property) new orders and fills are manual and/or automatic at some rate"/>
+        </gui.metadata>
+        <type-metadata>
+            <param name="type" value="module"/>
+            <param name="fully-qualified-name" value="com.tibco.sb.compexch.fix_venuesimulator.FIXsimulatorVenueOnly"/>
+        </type-metadata>
+        <memory-model-settings/>
+        <dynamic-variables/>
+        <module-reference name="venueSimulator">
+            <property name="description" value="IOCs are cancelled every &quot;IOCCnclRt&quot; set in the server module"/>
+            <param name="file" value="com.tibco.sb.compexch.fix_venuesimulator.venuesimulation.fixServer"/>
+            <param name="gui:x" value="304"/>
+            <param name="gui:y" value="804"/>
+        </module-reference>
+    </add>
+</modify>
