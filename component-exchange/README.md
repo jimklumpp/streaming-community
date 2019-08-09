@@ -4,10 +4,10 @@ Projects contributed by the community to the Component Exchange
 
 This is a maven aggregator project consisting of the following maven modules :
 
-* [Bollinger Bands Signaling](BollingerBandsSignaling/src/site/markdown/index.md) ([html](https://tibcosoftware.github.io/tibco-streaming-samples/10.5.0-SNAPSHOT/component-exchange/BollingerBandsSignaling/))
-* [Web Socket Client Sample](WebSocketClientSample/src/site/markdown/index.md) ([html](https://tibcosoftware.github.io/tibco-streaming-samples/10.5.0-SNAPSHOT/component-exchange/WebSocketClientSample/))
-* [AMS Client](ams-client/src/site/markdown/index.md) ([html](https://tibcosoftware.github.io/tibco-streaming-samples/10.5.0-SNAPSHOT/component-exchange/ams-client/))
-* [Performing calculus operations in Python](python/src/site/markdown/index.md) ([html](https://tibcosoftware.github.io/tibco-streaming-samples/10.5.0-SNAPSHOT/component-exchange/python/))
+* [Bollinger Bands Signaling](BollingerBandsSignaling/src/site/markdown/index.md) ([html](https://tibcoguillonapa.github.io/streaming-community/component-exchange/BollingerBandsSignaling/))
+* [Web Socket Client Sample](WebSocketClientSample/src/site/markdown/index.md) ([html](https://tibcoguillonapa.github.io/streaming-community/component-exchange/WebSocketClientSample/))
+* [AMS Client](ams-client/src/site/markdown/index.md) ([html](https://tibcoguillonapa.github.io/streaming-community/component-exchange/ams-client/))
+* [Performing calculus operations in Python](python/src/site/markdown/index.md) ([html](https://tibcoguillonapa.github.io/streaming-community/component-exchange/python/))
 
 ---
 Copyright (c) 2018-2019, TIBCO Software Inc.
