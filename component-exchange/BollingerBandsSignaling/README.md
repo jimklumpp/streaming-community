@@ -2,7 +2,7 @@
 
 Automated trading simulation using Bollinger Bands trading indicator
 
-* [BollingerBandsSignaling](src/site/markdown/index.md) ([html](https://tibcosoftware.github.io/tibco-streaming-samples/10.5.0-SNAPSHOT/component-exchange/BollingerBandsSignaling/))
+* [Bollinger Bands Signaling](src/site/markdown/index.md) ([html](https://tibcoguillonapa.github.io/streaming-community/component-exchange/BollingerBandsSignaling/))
 
 _This is a Tibco approved sample_
 

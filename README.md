@@ -1,10 +1,10 @@
-# TIBCO&reg; Streaming master Community Samples
+# TIBCO&reg; Streaming Community Samples
 
-This github repository contains a number of TIBCO&reg; Streaming master samples contributed by the community that can be cloned to your local workspace
+This github repository contains a number of TIBCO&reg; Streaming samples contributed by the community that can be cloned to your local workspace
 
 Overview:
 
-* [Using in TIBCO StreamBase Studio&trade; master](docs/studio.md)
+* [Using in TIBCO StreamBase Studio&trade;](docs/studio.md)
 * [Contributing](docs/contributing.md)
 * [License](docs/LICENSE)
 
