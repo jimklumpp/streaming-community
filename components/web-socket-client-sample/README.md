@@ -2,7 +2,7 @@
 
 Demonstrates websocket messages being published in TIBCO LiveView(TM) tables
 
-* [Web Socket Client Sample](src/site/markdown/index.md) ([html](https://tibcoguillonapa.github.io/streaming-community/component-exchange/WebSocketClientSample/))
+* [Web Socket Client Sample](src/site/markdown/index.md) ([html](https://tibcoguillonapa.github.io/streaming-community/components/web-socket-client-sample/))
 
 _This is a Tibco approved sample_
 

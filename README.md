@@ -10,8 +10,7 @@ Overview:
 
 Sample categories:
 
-* [Projects that relate to TIBCO Live Datamart and TIBCO LiveView Web](liveview)
-* [Projects contributed by the community to the Component Exchange](component-exchange)
+* [Projects contributed by the community](components)
 
 ---
 Copyright (c) 2018-2019, TIBCO Software Inc.

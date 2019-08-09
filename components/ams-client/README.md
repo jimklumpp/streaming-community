@@ -2,7 +2,7 @@
 
 AMS client operator demonstrates the use of the TIBCO Artifact Management Server REST API
 
-* [AMS Client](src/site/markdown/index.md) ([html](https://tibcoguillonapa.github.io/streaming-community/component-exchange/ams-client/))
+* [AMS Client](src/site/markdown/index.md) ([html](https://tibcoguillonapa.github.io/streaming-community/components/ams-client/))
 
 _This is a Tibco approved sample_
 

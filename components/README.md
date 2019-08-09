@@ -1,13 +1,15 @@
-# Component Exchange
+# Components
 
-Projects contributed by the community to the Component Exchange
+Projects contributed by the community
 
-This is a maven aggregator project consisting of the following maven modules :
+Samples :
 
-* [Bollinger Bands Signaling](BollingerBandsSignaling/src/site/markdown/index.md) ([html](https://tibcoguillonapa.github.io/streaming-community/component-exchange/BollingerBandsSignaling/))
-* [Web Socket Client Sample](WebSocketClientSample/src/site/markdown/index.md) ([html](https://tibcoguillonapa.github.io/streaming-community/component-exchange/WebSocketClientSample/))
-* [AMS Client](ams-client/src/site/markdown/index.md) ([html](https://tibcoguillonapa.github.io/streaming-community/component-exchange/ams-client/))
-* [Performing calculus operations in Python](python/src/site/markdown/index.md) ([html](https://tibcoguillonapa.github.io/streaming-community/component-exchange/python/))
+* [Bollinger Bands Signaling](bollinger-bands-signaling/src/site/markdown/index.md) ([html](https://tibcoguillonapa.github.io/streaming-community/components/bollinger-bands-signaling/))
+* [Web Socket Client Sample](web-socket-client-sample/src/site/markdown/index.md) ([html](https://tibcoguillonapa.github.io/streaming-community/components/web-socket-client-sample/))
+* [AMS Client](ams-client/src/site/markdown/index.md) ([html](https://tibcoguillonapa.github.io/streaming-community/components/ams-client/))
+* [Performing calculus operations in Python](python/src/site/markdown/index.md) ([html](https://tibcoguillonapa.github.io/streaming-community/components/python/))
+* [NYC Yellow Cabs: Visualize live data in LiveView Web using a LiveView project in StreamBase Studio](nyc-yellow-cabs-demo)
+* [Wikipedia: Visualize live data in LiveView Web using a LiveView project in StreamBase Studio](wikimedia)
 
 ---
 Copyright (c) 2018-2019, TIBCO Software Inc.
