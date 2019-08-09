@@ -6,11 +6,11 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.tibco.ep.community.components</groupId>
-    <artifactId>FIX_VenueSimulator</artifactId>
-    <packaging>ep-eventflow-fragment</packaging>
+    <artifactId>web-socket-client-sample</artifactId>
+    <packaging>ep-liveview-fragment</packaging>
     <version>1.0.0</version>
-    <name>FIX Venue Simulator</name>
-    <description>FIX Venue Simulator for use in Integration and Performance Testing</description>
+    <name>Web Socket Client Sample</name>
+    <description>Demonstrates websocket messages being published in TIBCO LiveView(TM) tables</description>
 
     <url>https://github.com/TIBCOguillonapa/streaming-community</url>
     
@@ -29,22 +29,25 @@
     <!-- common definitions for this version of StreamBase -->
     <parent>
         <groupId>com.tibco.ep.sb.parent</groupId>
-        <artifactId>ep-eventflow-fragment</artifactId>
+        <artifactId>ep-liveview-fragment</artifactId>
         <version>10.5.0-SNAPSHOT</version>
         <relativePath/>
     </parent>
 
     <dependencies>
-    	<dependency>
-    		<groupId>com.tibco.ep.sb.adapter</groupId>
-    		<artifactId>fix-core</artifactId>
-    		<version>10.5.0-SNAPSHOT</version>
-    	</dependency>
-    	<dependency>
-    		<groupId>com.tibco.ep.sb.adapter</groupId>
-    		<artifactId>feedsim</artifactId>
-    		<version>10.5.0-SNAPSHOT</version>
-    	</dependency>
+
+        <dependency>
+            <groupId>com.tibco.ep.lvweb</groupId>
+            <artifactId>lvweb</artifactId>
+            <type>war</type>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+        	<groupId>com.tibco.ep.sb.adapter</groupId>
+        	<artifactId>ldm</artifactId>
+        	<version>10.5.0-SNAPSHOT</version>
+        </dependency>
     </dependencies>
 
     <build>
@@ -64,5 +67,5 @@
             </plugin>
         </plugins>
     </build>
-    
+
 </project>

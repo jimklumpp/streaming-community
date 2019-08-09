@@ -6,7 +6,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.tibco.ep.community.components</groupId>
-    <artifactId>BollingerBandsSignaling</artifactId>
+    <artifactId>bollinger-bands-signaling</artifactId>
     <packaging>ep-eventflow-fragment</packaging>
     <version>1.0.0</version>
     <name>Bollinger Bands Signaling</name>
