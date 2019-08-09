@@ -9,6 +9,7 @@ StreamBase that imports the numpy library in order to perform either
 integration or differentiation on a polynomial.
 
 **Input Stream:**
+
 * Integrate    - A boolean variable where "true" represents integrate and "false" represents differentiate.
 * Coefficients - A list of polynomial coefficients that start at the term with the highest power and end with the constant term.
 

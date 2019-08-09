@@ -17,6 +17,7 @@ You can configure others by editing the client and server cfg files provided (Qu
 You can vary the venue simulation fill rates and (partial) fill quantities as discussed below.
 
 There are 4 parameters that are set up in the sbd.sbconf file to control fill rates. These are:
+
 1. FillRate: The Rate at which to fill orders in the order book (Day, GTC), in number of seconds (1/2 second between each fill)
  	**\<operator-parameter name="FillRate" value="0.5"/>**
 2. FillQty: The quantity to fill each order (300 shares per fill, up to the complete order) 
@@ -30,6 +31,7 @@ There are 4 parameters that are set up in the sbd.sbconf file to control fill ra
 
 The example client (with embedded, concurrent venue simulator) is supplied in the Demo_FIXVenueSimulator.sbapp. 
 Supply a single order request to the "ManuallyCreateNewOrder" input stream with the fields:
+
 * TimeInForce (0 or 1 for a Order Book entry that will slowly fill, or 3 for a Immediate-or-Cancel order)
 * Symbol (traded product identifying ticker)
 * session (a string that should match one of the Venue session names in the FIX cfg files, defined here as 

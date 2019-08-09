@@ -11,6 +11,7 @@ The parameters for this component can be set as constants in the Definitions
 tab of the EventFlow Editor for BollingerBandSignaling.sbapp.
 
 The parameters are:
+
 * **WindowSize:** The period or number of observations of the simple moving average.
 * **K:** The number of standard deviations to use for the high and low Bollinger bands.
 * **OrderSize:** The number of shares to trade with.
@@ -41,6 +42,7 @@ have the same parameters (K, WindowSize, OrderSize).
 Values for WindowSize,  K and OrderSize can vary (and can be set manually).
 
 The default values are:
+
 * WindowSize = 10
 * K = 1.96
 * OrderSize = 1000
