@@ -42,12 +42,14 @@
     <description>Projects contributed by the community</description>
 
     <modules>
+        <module>ams-client</module>
         <module>bollinger-bands-signaling</module>
         <!-- <module>fix-venue-simulator</module> -->
-        <module>web-socket-client-sample</module>
-        <module>ams-client</module>
-        <module>python</module>
         <module>nyc-yellow-cabs-demo</module>
+        <module>plane-tracker</module>
+        <module>python</module>
+        <module>smile-operators</module>
+        <module>web-socket-client-sample</module>
         <module>wikimedia</module>
     </modules>
 
