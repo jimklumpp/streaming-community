@@ -36,6 +36,7 @@ import smile.math.kernel.LinearKernel;
 public class Classification extends Operator implements Parameterizable {
 
 	public static final long serialVersionUID = 1561379988543L;
+	@SuppressWarnings("unused")
 	private Logger logger;
 	private String displayName = "Classifier (SMILE)";
 	private int inputPorts = 2;
@@ -810,6 +811,7 @@ public class Classification extends Operator implements Parameterizable {
 	 * @return The transformed array.
 	 * @throws StreamBaseException 
 	 */
+	@SuppressWarnings("unchecked")
 	private double[] listConverter(Tuple tuple, String field) throws StreamBaseException {
 		try {
 			return ((ArrayList<Double>) new ArrayList<>(tuple.getList(field)))

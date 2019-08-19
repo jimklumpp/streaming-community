@@ -403,6 +403,7 @@ public class Correlation extends Operator implements Parameterizable {
 	 * Sets up the window. 
 	 * @param inList The list to use as the first entry.
 	 */
+	@SuppressWarnings("unchecked")
 	private void initializeWindow(List<Double> inList) {
 		correlationsLength = inList.size();
 		window = new ArrayList[correlationsLength + 1];
@@ -418,6 +419,7 @@ public class Correlation extends Operator implements Parameterizable {
 	 * @return the created list
 	 * @throws StreamBaseException
 	 */
+	@SuppressWarnings("unchecked")
 	private List<Double> listFromTuple(Tuple tuple) throws StreamBaseException {
 		List<Double> inList;
 		if (format.equals("List")) {
@@ -596,7 +598,8 @@ public class Correlation extends Operator implements Parameterizable {
                     w[ji - 1] = rank;
                 }
 
-                double t = jt - j;
+                @SuppressWarnings("unused")
+				double t = jt - j;
                 j = jt;
             }
         }

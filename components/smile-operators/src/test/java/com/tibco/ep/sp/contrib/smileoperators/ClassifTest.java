@@ -1,9 +1,6 @@
 package com.tibco.ep.sp.contrib.smileoperators;
 
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.util.Arrays;
 import java.util.Scanner;
 
 import org.junit.After;
@@ -12,12 +9,9 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import com.streambase.sb.StreamBaseException;
 import com.streambase.sb.unittest.CSVTupleMaker;
-import com.streambase.sb.unittest.Dequeuer;
 import com.streambase.sb.unittest.Enqueuer;
 import com.streambase.sb.unittest.Expecter;
-import com.streambase.sb.unittest.JSONSingleQuotesTupleMaker;
 import com.streambase.sb.unittest.SBServerManager;
 import com.streambase.sb.unittest.ServerManagerFactory;
 
@@ -52,7 +46,7 @@ public class ClassifTest {
 	@Before
 	public void loadIris() throws Exception {		
 		int size = 150;
-		Scanner iris = new Scanner(new File("../../SmileOperators/src/main/resources/iris.csv"));
+		Scanner iris = new Scanner(new File(ClassifTest.class.getResource("iris.csv").toURI()));
 		iris.nextLine();
 		irisLabels = new int[size];
 		irisData = new double[4][size];
@@ -63,7 +57,7 @@ public class ClassifTest {
 	    		irisData[j][i] = Double.parseDouble(tokens[j]);
 			}
 		}
-		
+		iris.close();
 	}
 
 	@Test
