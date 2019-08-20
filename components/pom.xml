@@ -48,6 +48,7 @@
         <module>dt-schema</module>
         <module>nyc-yellow-cabs-demo</module>
         <module>plane-tracker</module>
+        <module>redis-adapter</module>
         <module>sb-ldm-influxdb-tableprovider</module>
         <module>smile-operators</module>
         <module>wikimedia</module>
