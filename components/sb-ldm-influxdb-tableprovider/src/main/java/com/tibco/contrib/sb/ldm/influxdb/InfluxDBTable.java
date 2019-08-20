@@ -22,15 +22,13 @@ import com.streambase.liveview.client.LiveViewQueryLanguage;
 import com.streambase.liveview.client.LiveViewQueryType;
 import com.streambase.liveview.client.LiveViewTableCapability;
 import com.streambase.liveview.client.Table.TableStatus;
-import com.streambase.liveview.server.event.BeginSnapshotEvent;
-import com.streambase.liveview.server.event.EndSnapshotEvent;
-import com.streambase.liveview.server.event.EventListener;
-import com.streambase.liveview.server.event.QueryExceptionEvent;
-import com.streambase.liveview.server.event.TupleAddedEvent;
+import com.streambase.liveview.server.event.query.EndSnapshotEvent;
+import com.streambase.liveview.server.event.query.QueryExceptionEvent;
+import com.streambase.liveview.server.event.query.listener.QueryEventListener;
+import com.streambase.liveview.server.event.tuple.TupleAddedEvent;
 import com.streambase.liveview.server.query.QueryModel;
 import com.streambase.liveview.server.table.CatalogedTable;
 import com.streambase.liveview.server.table.Table;
-import com.streambase.liveview.server.table.TablePublisher;
 import com.streambase.liveview.server.table.plugin.TableProviderControl;
 import com.streambase.sb.DataType;
 import com.streambase.sb.Schema;
@@ -153,12 +151,12 @@ public class InfluxDBTable implements Table {
 
 	@Override
 	public QueryModel parseQuery(CatalogedTable catalogedTable, String queryString, LiveViewQueryType type,
-			boolean includeInternal) throws LiveViewException {
-		return new InfluxDBQueryModel(catalogedTable, this, queryString, type);
+			boolean includeInternal, String additionalPredicate) throws LiveViewException {
+		return new InfluxDBQueryModel(catalogedTable, this, queryString, type, additionalPredicate);
 	}
 
 	@Override
-	public void addListener(EventListener lvListener, LiveViewQueryType type, QueryModel query) {
+	public void addListener(QueryEventListener lvListener, LiveViewQueryType type, QueryModel query) {
         if (!(query instanceof InfluxDBQueryModel)) {
             throw new IllegalStateException("InfluxDBTable provider handed an unexpected query model: " + query);
         }
@@ -176,7 +174,7 @@ public class InfluxDBTable implements Table {
     	}
 	    
 	    if (type == LiveViewQueryType.SNAPSHOT || type == LiveViewQueryType.SNAPSHOT_AND_CONTINUOUS) {
-	    	new BeginSnapshotEvent(this).dispatch(lvListener);
+	    	new com.streambase.liveview.server.event.query.BeginSnapshotEvent(this).dispatch(lvListener);
 	    	for (Result result : qresult.getResults()) {
 	    		if (result != null && !Util.isEmpty(result.getSeries())) {
 	    			for (Series rseries : result.getSeries()) {
@@ -221,8 +219,7 @@ public class InfluxDBTable implements Table {
 	    			}
 	    		}
 	    	}
-//EndSnapshotEvent.dispatch(lvListener)
-	    	lvListener.sendEvent(new EndSnapshotEvent(this));
+	    	new EndSnapshotEvent(this).dispatch(lvListener);
 
 	    } else {
 	    	// UNHANDLED TYPE
@@ -231,21 +228,15 @@ public class InfluxDBTable implements Table {
 	}
     
 	@Override
-	public void removeListener(EventListener listener) throws LiveViewException {
+	public void removeListener(QueryEventListener listener) throws LiveViewException {
 		// used for continuous queries, and handling of long-running queries. this sample implements neither 
 	}
 
 	@Override
-	public TablePublisher createPublisher(final String publisherName) throws LiveViewException {
+	public com.streambase.liveview.server.table.publisher.TablePublisher createPublisher(final String publisherName) throws LiveViewException {
 		throw LiveViewExceptionType.PUBLISHING_NOT_SUPPORTED.error();
 	}
 
-	@Override
-	public void doDelete(String id, QueryModel query) throws LiveViewException {
-		throw LiveViewExceptionType.TABLE_DOES_NOT_SUPPORT_QUERY.error();
-		
-	}
-	
 	protected String getTableName() {
 		return this.tableName;
 	}

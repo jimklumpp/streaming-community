@@ -8,6 +8,7 @@ import com.streambase.liveview.client.LiveViewQueryType;
 import com.streambase.liveview.client.OrderDefinition;
 import com.streambase.liveview.server.query.QueryModelBase;
 import com.streambase.liveview.server.table.CatalogedTable;
+import com.streambase.sb.expr.SBExpr;
 import com.streambase.sb.util.Util;
 
 /**
@@ -26,8 +27,8 @@ public class InfluxDBQueryModel extends QueryModelBase {
 	private final InfluxDBTable influxDBTable;
 	private final String queryString;
 	
-	public InfluxDBQueryModel(CatalogedTable catalogedTable, InfluxDBTable influxDBTable, String queryString, LiveViewQueryType type) {
-		super(catalogedTable, queryString, type);
+	public InfluxDBQueryModel(CatalogedTable catalogedTable, InfluxDBTable influxDBTable, String queryString, LiveViewQueryType type, String additionalPredicate) {
+		super(catalogedTable, queryString, type, additionalPredicate);
 		this.influxDBTable = influxDBTable;
 		this.queryString = cleanupQueryString(queryString);
 		resultSchema = influxDBTable.getSchema();
@@ -167,6 +168,30 @@ public class InfluxDBQueryModel extends QueryModelBase {
 	@Override
 	public String getOriginalQuery() {
 		return queryString;
+	}
+
+	@Override
+	public String getDisplayablePredicate() {
+		return "";
+	}
+
+	@Override
+	public boolean hasHaving() {
+		return false;
+	}
+	@Override
+	public String getHaving() {
+		return null;
+	}
+	@Override
+	public SBExpr getHavingExpr() {
+		return null;
+	}
+
+
+	@Override
+	public String getEnhancedToString() {
+		return toString();
 	}
 
 }

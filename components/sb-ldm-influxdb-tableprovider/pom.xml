@@ -8,7 +8,7 @@
     <groupId>com.tibco.contrib</groupId>
     <artifactId>sb-ldm-influxdb-tableprovider</artifactId>
     <packaging>ep-liveview-fragment</packaging>
-    <version>1.1.0</version>
+    <version>1.1.1</version>
     <name>SB LDM InfluxDB Table Provider</name>
     <description>Live Datamart Table Provider example for querying an InfluxDB database</description>
 
@@ -30,7 +30,7 @@
     <parent>
         <groupId>com.tibco.ep.sb.parent</groupId>
         <artifactId>ep-liveview-fragment</artifactId>
-        <version>[10.5.0-SNAPSHOT,99.99.99)</version>
+        <version>10.5.0-SNAPSHOT</version>
     </parent>
 
     <dependencies>
@@ -46,6 +46,11 @@
         	<groupId>org.influxdb</groupId>
         	<artifactId>influxdb-java</artifactId>
         	<version>2.8</version>
+        </dependency>
+        
+        <dependency>
+        	<groupId>com.tibco.ep.ldm</groupId>
+        	<artifactId>client</artifactId>
         </dependency>
     </dependencies>
 
