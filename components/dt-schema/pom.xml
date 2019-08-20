@@ -32,8 +32,9 @@
     <!-- common definitions for this version of StreamBase -->
     <parent>
         <groupId>com.tibco.ep.sb.parent</groupId>
-        <artifactId>ep-java-fragment</artifactId>
+        <artifactId>ep-java-fragment-samples</artifactId>
         <version>[10.5.0-SNAPSHOT,99.99.99)</version>
+        <relativePath/>
     </parent>
 
     <dependencies>
