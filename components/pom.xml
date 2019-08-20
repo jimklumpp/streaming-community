@@ -44,6 +44,7 @@
     <modules>
         <module>ams-client</module>
         <module>bollinger-bands-signaling</module>
+        <module>delay-operator</module>
         <module>dt-schema</module>
         <module>nyc-yellow-cabs-demo</module>
         <module>plane-tracker</module>
