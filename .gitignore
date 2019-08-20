@@ -10,4 +10,4 @@
 target/
 
 # files with extension
-*.war
+*lvweb.war
