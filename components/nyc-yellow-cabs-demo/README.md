@@ -2,9 +2,6 @@
 
 NYC Yellow Cabs: Visualize live data in LiveView Web using a LiveView project in StreamBase Studio
 
-
-_This is a Tibco approved sample_
-
 ---
 Copyright (c) 2018-2019, TIBCO Software Inc.
 

@@ -1,19 +1,8 @@
-# Components
+# SB LDM InfluxDB Table Provider
 
-Projects contributed by the community
+Live Datamart Table Provider example for querying an InfluxDB database
 
-Samples :
-
-* [AMS Client: AMS client operator demonstrates the use of the TIBCO Artifact Management Server REST API](ams-client/src/site/markdown/index.md)
-* [Bollinger Bands Signaling: Automated trading simulation using Bollinger Bands trading indicator](bollinger-bands-signaling/src/site/markdown/index.md)
-* [Delay Operator: Delays the transmission of data along a stream by a specified amount of time](delay-operator)
-* [Decision Table Schema: Demonstrates generating Java wrappers from a decision table model](dt-schema)
-* [NYC Yellow Cabs: Visualize live data in LiveView Web using a LiveView project in StreamBase Studio](nyc-yellow-cabs-demo)
-* [Plane Tracker: Decode airplane radio and publish plane data to LiveViewTM Server](plane-tracker)
-* [Redis Adapter: Adapters to send and receive messages from a Redis database, including streaming](redis-adapter)
-* [SB LDM InfluxDB Table Provider: Live Datamart Table Provider example for querying an InfluxDB database](sb-ldm-influx-tableprovider)
-* [SMILE Operators: SMILE Stat and ML library integration operators](smile-operators)
-* [Wikipedia: Visualize live data in LiveView Web using a LiveView project in StreamBase Studio](wikimedia)
+* [SB LDM InfluxDB Table Provider](src/site/markdown/index.md)
 
 ---
 Copyright (c) 2018-2019, TIBCO Software Inc.
