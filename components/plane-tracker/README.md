@@ -23,16 +23,16 @@ This sample decodes airplane information using SDR (Software Defined Radio) and 
 * Extract dump1090.zip to src/main/resources or clone the file from https://github.com/MalcolmRobb/dump1090 into the same folder and open it in your system explorer. Then double click dump.bat in your system explorer to run the application which will start to listen and decode radio signals in the range of your SDR.
 	* Note: dump.bat will open dump.exe in a terminal window with specific configuration for you to see plane data. If a terminal window failes to open, try reconnecting to your SDR or reinstalling the driver.
 	
-	![command line](images/planetracker1.png)
+	![command line](src/site/markdown/images/planetracker1.png)
 	
 * After you can see data showing in the terminal window, from StreamBase Studio right click on PlaneTracker and choose run as LiveViewTM Fragment.
 	
 * Once the sample has successfully loaded, run LiveView Web by typing localhost:10080 into a browser. Look for plane data publishing to LiveView server and also planes moving on the embedded GeoMap.
 
-	![liveview web dashboard](images/planetracker2.png)
+	![liveview web dashboard](src/site/markdown/images/planetracker2.png)
 
 	
 * TIBCO LiveViewTM Web also includes a customized visualization card which can render a third party web site displaying the plane detail once you select a plane from the map or in card "Planes". Look for the custom card's resource file in src/main/liveview/lv-web/plugins/com.tibco.sb.ldm.web.plugins.queryiframe
 	
-	![custom card](images/planetracker3.png)
+	![custom card](src/site/markdown/images/planetracker3.png)
 	  
