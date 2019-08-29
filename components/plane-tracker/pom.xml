@@ -16,7 +16,7 @@
     
     <licenses>
         <license>
-            <name>BSD 3-Clause License</name>
+            <name>BSD 2-Clause License</name>
             <url>https://raw.githubusercontent.com/TIBCOguillonapa/streaming-community/master/docs/LICENSE</url>
             <distribution>repo</distribution>
         </license>
